@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>5205552108</groupId>
-  <artifactId>5205552108-parent</artifactId>
+  <groupId>52055-52108</groupId>
+  <artifactId>52055-52108-mbaracus</artifactId>
   <version>1</version>
   <packaging>pom</packaging>
-  <name>5205552108-parent</name>
+  <name>52055-52108-mbaracus</name>
   <modules>
     <module>api</module>
     <module>server</module>
@@ -94,15 +94,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <version>2.8</version>
-        <inherited>true</inherited>
-        <configuration>
-          <outputDirectory>${project.build.directory}/eclipse-bin</outputDirectory>
-          <wtpversion>2.0</wtpversion>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>2.4</version>
@@ -115,32 +106,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12.4</version>
-      </plugin>
-      <plugin>
-        <groupId>com.github.ekryd.sortpom</groupId>
-        <artifactId>sortpom-maven-plugin</artifactId>
-        <version>2.4.0</version>
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <lineSeparator>\n</lineSeparator>
-          <encoding>${project.build.sourceEncoding}</encoding>
-          <sortProperties>true</sortProperties>
-          <keepBlankLines>false</keepBlankLines>
-          <sortDependencies>scope</sortDependencies>
-          <verifyFail>Stop</verifyFail>
-        </configuration>
-      </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>

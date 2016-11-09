@@ -7,6 +7,6 @@ public class Server {
     private static Logger logger = LoggerFactory.getLogger(Server.class);
 
     public static void main(String[] args) {
-        logger.info("5205552108 Server Starting ...");
+        logger.info("52055-52108 Server Starting ...");
     }
 }
