@@ -1,4 +1,4 @@
-package mbaracus.client;
+package mbaracus.utils;
 
 import org.apache.commons.cli.*;
 

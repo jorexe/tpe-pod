@@ -1,0 +1,5 @@
+Rinconada = 0,20
+Catan Lil = 0,40
+Telsen = 0,25
+San Blas de los Sauces = 0,18
+Tehuelches = 0,17
