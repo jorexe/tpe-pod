@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>52055-52108-mbaracus</artifactId>
-    <groupId>52055-52108</groupId>
-    <version>1</version>
+    <artifactId>mbaracus</artifactId>
+    <groupId>mbaracus</groupId>
+    <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>52055-52108</groupId>
-  <artifactId>52055-52108-server</artifactId>
-  <version>1</version>
-  <name>52055-52108-server</name>
+  <groupId>mbaracus</groupId>
+  <artifactId>mbaracus-server</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>mbaracus-server</name>
   <dependencies>
     <dependency>
-      <groupId>52055-52108</groupId>
-      <artifactId>52055-52108-api</artifactId>
+      <groupId>mbaracus</groupId>
+      <artifactId>mbaracus-api</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

@@ -1,4 +1,4 @@
-package ar.itba.edu.server;
+package mbaracus.server;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
