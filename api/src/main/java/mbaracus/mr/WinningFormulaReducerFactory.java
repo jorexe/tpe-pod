@@ -14,8 +14,7 @@ public class WinningFormulaReducerFactory implements ReducerFactory<String, Form
             private FormulaTupla max;
 
             @Override
-            public void beginReduce() // una sola vez en cada instancia
-            {
+            public void beginReduce() {
                 max = new FormulaTupla(-1, "");
             }
 
