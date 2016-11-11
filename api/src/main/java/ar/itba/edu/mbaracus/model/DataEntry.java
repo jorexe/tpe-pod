@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by jorexe on 10/11/16.
  */
-public abstract class DataEntry implements DataSerializable{
+public abstract class DataEntry implements DataSerializable {
 
     public long id;
     public int age;
