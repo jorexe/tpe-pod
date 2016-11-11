@@ -1,6 +1,6 @@
-package ar.itba.edu.mbaracus.query2.mr;
+package mbaracus.query2.mr;
 
-import ar.itba.edu.mbaracus.query2.model.HouseCount;
+import mbaracus.query2.model.HouseCount;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 

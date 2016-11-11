@@ -22,9 +22,8 @@ public class CensoReader {
 
         CensoTuple data;
         while ((data = beanReader.read(CensoTuple.class, header, processors)) != null) {
-            System.out.println(String.format("lineNo=%s, rowNo=%s, person=%s",
-                    beanReader.getLineNumber(), beanReader.getRowNumber(), data));
-            iMap.set(data.getNombreprov() + "-" + data.getNombredepto(), data);
+            System.out.println(data);
+            iMap.set(String.format("%d", beanReader.getLineNumber()), data);
         }
         if (beanReader != null) {
             beanReader.close();

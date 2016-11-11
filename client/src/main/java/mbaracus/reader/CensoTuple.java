@@ -42,6 +42,35 @@ public class CensoTuple implements DataSerializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "CensoTuple{" +
+                "tipoVivienda=" + tipoVivienda +
+                ", calidadServicios=" + calidadServicios +
+                ", sexo=" + sexo +
+                ", edad=" + edad +
+                ", alfabetismo=" + alfabetismo +
+                ", actividad=" + actividad +
+                ", nombredepto='" + nombredepto + '\'' +
+                ", nombreprov='" + nombreprov + '\'' +
+                ", hogarId=" + hogarId +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = tipoVivienda != null ? tipoVivienda.hashCode() : 0;
+        result = 31 * result + (calidadServicios != null ? calidadServicios.hashCode() : 0);
+        result = 31 * result + (sexo != null ? sexo.hashCode() : 0);
+        result = 31 * result + (edad != null ? edad.hashCode() : 0);
+        result = 31 * result + (alfabetismo != null ? alfabetismo.hashCode() : 0);
+        result = 31 * result + (actividad != null ? actividad.hashCode() : 0);
+        result = 31 * result + (nombredepto != null ? nombredepto.hashCode() : 0);
+        result = 31 * result + (nombreprov != null ? nombreprov.hashCode() : 0);
+        result = 31 * result + (hogarId != null ? hogarId.hashCode() : 0);
+        return result;
+    }
+
     public Integer getTipoVivienda() {
         return tipoVivienda;
     }

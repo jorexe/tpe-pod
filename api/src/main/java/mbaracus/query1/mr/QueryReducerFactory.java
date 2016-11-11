@@ -1,7 +1,7 @@
-package ar.itba.edu.mbaracus.query1.mr;
+package mbaracus.query1.mr;
 
-import ar.itba.edu.mbaracus.query1.model.AgeCount;
-import ar.itba.edu.mbaracus.query1.model.AgeType;
+import mbaracus.query1.model.AgeCount;
+import mbaracus.query1.model.AgeType;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 

@@ -1,6 +1,6 @@
-package ar.itba.edu.mbaracus.query1.model;
+package mbaracus.query1.model;
 
-import ar.itba.edu.mbaracus.model.DataEntry;
+import mbaracus.model.DataEntry;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 

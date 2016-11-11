@@ -1,4 +1,4 @@
-package ar.itba.edu.mbaracus.query1.model;
+package mbaracus.query1.model;
 
 /**
  * Created by jorexe on 10/11/16.

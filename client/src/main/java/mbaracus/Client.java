@@ -5,8 +5,8 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
-import mbaracus.model.Votacion;
 import mbaracus.reader.CensoReader;
+import mbaracus.reader.CensoTuple;
 import mbaracus.utils.ArgumentParser;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 public class Client {
-    private static final String MAP_NAME = "censo-baracus";
+    public static final String MAP_NAME = "censo-baracus";
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) throws IOException {
@@ -32,14 +32,14 @@ public class Client {
             logger.error(e.getMessage());
             return;
         }
-        CensoReader.parseCsv(null, parser.getInputFile());
 
         HazelcastInstance client = getHzClient(parser);
 
         System.out.println(client.getCluster());
 
-        IMap<String, Votacion> iMap = client.getMap(MAP_NAME);
+        IMap<String, CensoTuple> iMap = client.getMap(MAP_NAME);
 
+        CensoReader.parseCsv(iMap, parser.getInputFile());
 
 //        // Ahora el JobTracker y los Workers!
 //        JobTracker tracker = client.getJobTracker("default");

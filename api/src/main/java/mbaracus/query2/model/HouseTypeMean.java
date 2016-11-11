@@ -1,5 +1,6 @@
-package ar.itba.edu.mbaracus.query2.model;
+package mbaracus.query2.model;
 
+import mbaracus.enumerators.HouseType;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.DataSerializable;
@@ -9,27 +10,31 @@ import java.io.IOException;
 /**
  * Created by jorexe on 10/11/16.
  */
-public class HouseCount implements DataSerializable {
-    public String departmentName;
+public class HouseTypeMean implements DataSerializable {
+    public HouseType houseType;
+    public float mean;
     public int count;
 
-    public HouseCount() {
+    public HouseTypeMean() {
     }
 
-    public HouseCount(String departmentName, int count) {
-        this.departmentName = departmentName;
+    public HouseTypeMean(HouseType houseType, float mean, int count) {
+        this.houseType = houseType;
+        this.mean = mean;
         this.count = count;
     }
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeUTF(departmentName);
+        out.writeInt(houseType.ordinal());
+        out.writeFloat(mean);
         out.writeInt(count);
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.departmentName = in.readUTF();
+        this.houseType = HouseType.values()[in.readInt()];
+        this.mean = in.readFloat();
         this.count = in.readInt();
     }
 }

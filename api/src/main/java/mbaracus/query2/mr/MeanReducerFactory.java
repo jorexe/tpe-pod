@@ -1,7 +1,7 @@
-package ar.itba.edu.mbaracus.query2.mr;
+package mbaracus.query2.mr;
 
-import ar.itba.edu.mbaracus.enumerators.HouseType;
-import ar.itba.edu.mbaracus.query2.model.HouseTypeMean;
+import mbaracus.enumerators.HouseType;
+import mbaracus.query2.model.HouseTypeMean;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 

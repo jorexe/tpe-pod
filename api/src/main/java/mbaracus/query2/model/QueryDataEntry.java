@@ -1,7 +1,7 @@
-package ar.itba.edu.mbaracus.query2.model;
+package mbaracus.query2.model;
 
-import ar.itba.edu.mbaracus.enumerators.HouseType;
-import ar.itba.edu.mbaracus.model.DataEntry;
+import mbaracus.enumerators.HouseType;
+import mbaracus.model.DataEntry;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 

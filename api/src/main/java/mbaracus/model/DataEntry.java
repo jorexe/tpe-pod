@@ -1,6 +1,6 @@
-package ar.itba.edu.mbaracus.model;
+package mbaracus.model;
 
-import ar.itba.edu.mbaracus.enumerators.HouseType;
+import mbaracus.enumerators.HouseType;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.DataSerializable;

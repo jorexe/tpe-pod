@@ -1,4 +1,4 @@
-package ar.itba.edu.mbaracus.query1.model;
+package mbaracus.query2.model;
 
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
@@ -9,27 +9,27 @@ import java.io.IOException;
 /**
  * Created by jorexe on 10/11/16.
  */
-public class AgeCount implements DataSerializable {
-    public AgeType ageType;
+public class HouseCount implements DataSerializable {
+    public String departmentName;
     public int count;
 
-    public AgeCount() {
+    public HouseCount() {
     }
 
-    public AgeCount(AgeType ageType, int count) {
-        this.ageType = ageType;
+    public HouseCount(String departmentName, int count) {
+        this.departmentName = departmentName;
         this.count = count;
     }
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeInt(ageType.ordinal());
+        out.writeUTF(departmentName);
         out.writeInt(count);
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.ageType = AgeType.values()[in.readInt()];
+        this.departmentName = in.readUTF();
         this.count = in.readInt();
     }
 }

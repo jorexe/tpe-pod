@@ -1,4 +1,4 @@
-package ar.itba.edu.mbaracus.enumerators;
+package mbaracus.enumerators;
 
 /**
  * Created by jorexe on 10/11/16.
