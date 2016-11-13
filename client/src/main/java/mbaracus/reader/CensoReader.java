@@ -12,7 +12,7 @@ import java.io.*;
 import java.nio.file.Path;
 
 public class CensoReader {
-    public static void parseCsv(final IMap<String, CensoTuple> iMap, Path path) throws IOException {
+    public static void parseCsv(final IMap<Integer, CensoTuple> iMap, Path path) throws IOException {
         final InputStream is = new FileInputStream(path.toString());
         final Reader aReader = new InputStreamReader(is);
         ICsvBeanReader beanReader = new CsvBeanReader(aReader, CsvPreference.STANDARD_PREFERENCE);
@@ -23,7 +23,7 @@ public class CensoReader {
         CensoTuple data;
         while ((data = beanReader.read(CensoTuple.class, header, processors)) != null) {
             System.out.println(data);
-            iMap.set(String.format("%d", beanReader.getLineNumber()), data);
+            iMap.set(beanReader.getLineNumber(), data);
         }
         if (beanReader != null) {
             beanReader.close();

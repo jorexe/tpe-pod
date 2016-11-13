@@ -5,6 +5,10 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.hazelcast.mapreduce.Job;
+import com.hazelcast.mapreduce.JobTracker;
+import com.hazelcast.mapreduce.KeyValueSource;
+import mbaracus.query1.model.QueryDataEntry;
 import mbaracus.reader.CensoReader;
 import mbaracus.reader.CensoTuple;
 import mbaracus.utils.ArgumentParser;
@@ -20,8 +24,10 @@ public class Client {
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) throws IOException {
-        logger.info("52055-52108 Client Starting ...");
+        long startTime, endTime;
 
+        logger.info("Inicio del parseo de entrada");
+        startTime = System.currentTimeMillis();
         ArgumentParser parser = new ArgumentParser();
         try {
             parser.parse(args);
@@ -32,23 +38,27 @@ public class Client {
             logger.error(e.getMessage());
             return;
         }
+        endTime = System.currentTimeMillis();
+        logger.info("Fin del parseo de entrada" + timeDuration(startTime, endTime));
+
 
         HazelcastInstance client = getHzClient(parser);
-
         System.out.println(client.getCluster());
+        IMap<Integer, CensoTuple> iMap = client.getMap(MAP_NAME);
 
-        IMap<String, CensoTuple> iMap = client.getMap(MAP_NAME);
 
+        logger.info("Inicio de la lectura del archivo");
+        startTime = System.currentTimeMillis();
         CensoReader.parseCsv(iMap, parser.getInputFile());
+        endTime = System.currentTimeMillis();
+        logger.info("Fin de la lectura del archivo" + timeDuration(startTime, endTime));
 
-//        // Ahora el JobTracker y los Workers!
-//        JobTracker tracker = client.getJobTracker("default");
-//
-//        // Ahora el Job desde los pares(key, Value) que precisa MapReduce
-//        KeyValueSource<String, Votacion> source = KeyValueSource.fromMap(myMap);
-//        Job<String, Votacion> job = tracker.newJob(source);
-//
-//        // // Orquestacion de Jobs y lanzamiento
+
+        JobTracker tracker = client.getJobTracker("default");
+        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
+        Job<Integer, CensoTuple> job = tracker.newJob(source);
+
+//        // Orquestacion de Jobs y lanzamiento
 //        ICompletableFuture<Map<String, FormulaTupla>> future = job
 //                .mapper(new ComunaFormulaVotesMapperFactory())
 //                .reducer(new WinningFormulaReducerFactory())
@@ -63,6 +73,8 @@ public class Client {
 //
 //        System.exit(0);
 
+        logger.info("Inicio del trabajo map/reduce");
+        startTime = System.currentTimeMillis();
         switch (parser.getQuery()) {
             case 1:
                 break;
@@ -73,6 +85,8 @@ public class Client {
             case 4:
                 break;
         }
+        endTime = System.currentTimeMillis();
+        logger.info("Fin del trabajo map/reduce" + timeDuration(startTime, endTime));
     }
 
     private static HazelcastInstance getHzClient(ArgumentParser parser) {
@@ -84,5 +98,9 @@ public class Client {
         net.addAddress(arrayAddresses);
         ccfg.setNetworkConfig(net);
         return HazelcastClient.newHazelcastClient(ccfg);
+    }
+
+    private static String timeDuration(long timeStart, long timeEnd) {
+        return String.format(", duración: %d ms", timeEnd - timeStart);
     }
 }
