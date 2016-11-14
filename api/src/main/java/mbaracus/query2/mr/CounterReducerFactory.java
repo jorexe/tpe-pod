@@ -4,9 +4,6 @@ import mbaracus.query2.model.HouseCount;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-/**
- * Created by jorexe on 10/11/16.
- */
 public class CounterReducerFactory implements ReducerFactory<String, HouseCount, HouseCount> {
 
     @Override

@@ -42,6 +42,7 @@ public class ArgumentParser {
         validQueries.add(2);
         validQueries.add(3);
         validQueries.add(4);
+        validQueries.add(5);
     }
 
     private void addOptions() {

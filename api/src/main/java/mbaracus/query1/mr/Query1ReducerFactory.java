@@ -5,10 +5,7 @@ import mbaracus.query1.model.AgeType;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-/**
- * Created by jorexe on 10/11/16.
- */
-public class QueryReducerFactory implements ReducerFactory<AgeType, AgeCount, AgeCount> {
+public class Query1ReducerFactory implements ReducerFactory<AgeType, AgeCount, AgeCount> {
 
     @Override
     public Reducer<AgeCount, AgeCount> newReducer(AgeType key) {

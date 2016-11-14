@@ -1,6 +1,7 @@
 package mbaracus.reader;
 
 import com.hazelcast.core.IMap;
+import mbaracus.model.CensoTuple;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -12,7 +13,7 @@ import java.io.*;
 import java.nio.file.Path;
 
 public class CensoReader {
-    public static void parseCsv(final IMap<Integer, CensoTuple> iMap, Path path) throws IOException {
+    public static void parseCsv(final IMap<String, CensoTuple> iMap, Path path) throws IOException {
         final InputStream is = new FileInputStream(path.toString());
         final Reader aReader = new InputStreamReader(is);
         ICsvBeanReader beanReader = new CsvBeanReader(aReader, CsvPreference.STANDARD_PREFERENCE);
@@ -23,7 +24,8 @@ public class CensoReader {
         CensoTuple data;
         while ((data = beanReader.read(CensoTuple.class, header, processors)) != null) {
             System.out.println(data);
-            iMap.set(beanReader.getLineNumber(), data);
+            iMap.set(data.getNombredepto() + ", " + data.getNombreprov(), data);
+            data.setRowId(beanReader.getLineNumber());
         }
         if (beanReader != null) {
             beanReader.close();

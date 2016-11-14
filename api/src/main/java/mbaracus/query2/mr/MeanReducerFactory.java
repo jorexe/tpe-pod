@@ -5,9 +5,6 @@ import mbaracus.query2.model.HouseTypeMean;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-/**
- * Created by jorexe on 10/11/16.
- */
 public class MeanReducerFactory implements ReducerFactory<HouseType, HouseTypeMean, HouseTypeMean> {
 
     @Override

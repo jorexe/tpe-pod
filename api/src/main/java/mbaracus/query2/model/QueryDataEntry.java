@@ -1,24 +1,21 @@
 package mbaracus.query2.model;
 
 import mbaracus.enumerators.HouseType;
-import mbaracus.model.DataEntry;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
+import mbaracus.model.CensoTuple;
 
 import java.io.IOException;
 
-/**
- * Created by jorexe on 10/11/16.
- */
-public class QueryDataEntry extends DataEntry {
+public class QueryDataEntry extends CensoTuple {
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeInt(houseType.ordinal());
+//        out.writeInt(tipoVivienda.ordinal());
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.houseType = HouseType.values()[in.readInt()];
+//        this.tipoVivienda = HouseType.values()[in.readInt()];
     }
 }

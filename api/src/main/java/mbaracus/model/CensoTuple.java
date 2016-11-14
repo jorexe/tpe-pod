@@ -1,13 +1,15 @@
-package mbaracus.reader;
+package mbaracus.model;
 
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.DataSerializable;
+import mbaracus.enumerators.HouseType;
 
 import java.io.IOException;
 
 public class CensoTuple implements DataSerializable {
-    private Integer tipoVivienda;
+    private Integer rowId;
+    private HouseType tipoVivienda;
     private Integer calidadServicios;
     private Integer sexo;
     private Integer edad;
@@ -21,7 +23,7 @@ public class CensoTuple implements DataSerializable {
     }
 
     public CensoTuple(Integer tipoVivienda, Integer calidadServicios, Integer sexo, Integer edad, Integer alfabetismo, Integer actividad, String nombreDpto, String nombreProvincia, Integer hogarId) {
-        this.tipoVivienda = tipoVivienda;
+        this.tipoVivienda = HouseType.from(tipoVivienda);
         this.calidadServicios = calidadServicios;
         this.sexo = sexo;
         this.edad = edad;
@@ -34,12 +36,26 @@ public class CensoTuple implements DataSerializable {
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-
+        out.writeObject(tipoVivienda);
+        out.writeInt(calidadServicios);
+        out.writeInt(sexo);
+        out.writeInt(edad);
+        out.writeInt(alfabetismo);
+        out.writeUTF(nombredepto);
+        out.writeUTF(nombreprov);
+        out.writeInt(hogarId);
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-
+        in.readObject();
+        in.readInt();
+        in.readInt();
+        in.readInt();
+        in.readInt();
+        in.readUTF();
+        in.readUTF();
+        in.readInt();
     }
 
     @Override
@@ -71,12 +87,12 @@ public class CensoTuple implements DataSerializable {
         return result;
     }
 
-    public Integer getTipoVivienda() {
+    public HouseType getTipoVivienda() {
         return tipoVivienda;
     }
 
     public void setTipoVivienda(Integer tipoVivienda) {
-        this.tipoVivienda = tipoVivienda;
+        this.tipoVivienda = HouseType.from(tipoVivienda);
     }
 
     public Integer getCalidadServicios() {
@@ -141,5 +157,9 @@ public class CensoTuple implements DataSerializable {
 
     public void setHogarId(Integer hogarId) {
         this.hogarId = hogarId;
+    }
+
+    public void setRowId(Integer id) {
+        this.rowId = id;
     }
 }

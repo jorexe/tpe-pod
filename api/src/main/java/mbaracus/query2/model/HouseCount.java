@@ -6,9 +6,6 @@ import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
 
-/**
- * Created by jorexe on 10/11/16.
- */
 public class HouseCount implements DataSerializable {
     public String departmentName;
     public int count;

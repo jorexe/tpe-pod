@@ -7,9 +7,6 @@ import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
 
-/**
- * Created by jorexe on 10/11/16.
- */
 public class HouseTypeMean implements DataSerializable {
     public HouseType houseType;
     public float mean;

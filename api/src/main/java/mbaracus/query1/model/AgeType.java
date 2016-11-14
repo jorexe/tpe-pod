@@ -1,8 +1,5 @@
 package mbaracus.query1.model;
 
-/**
- * Created by jorexe on 10/11/16.
- */
 public enum AgeType {
     A("0-14 Años"),
     B("15-64 Años"),

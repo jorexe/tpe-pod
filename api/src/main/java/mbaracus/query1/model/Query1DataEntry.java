@@ -1,23 +1,20 @@
 package mbaracus.query1.model;
 
-import mbaracus.model.DataEntry;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
+import mbaracus.model.CensoTuple;
 
 import java.io.IOException;
 
-/**
- * Created by jorexe on 10/11/16.
- */
-public class QueryDataEntry extends DataEntry {
+public class Query1DataEntry extends CensoTuple {
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeInt(age);
+        out.writeInt(getEdad());
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.age = in.readInt();
+        setEdad(in.readInt());
     }
 }
