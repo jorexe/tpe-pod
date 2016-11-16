@@ -6,10 +6,10 @@ import mbaracus.model.CensoTuple;
 import mbaracus.query1.model.AgeCount;
 import mbaracus.query1.model.AgeType;
 
-public class Query1MapperFactory implements Mapper<String, CensoTuple, AgeType, AgeCount> {
+public class Query1MapperFactory implements Mapper<Integer, CensoTuple, AgeType, AgeCount> {
 
     @Override
-    public void map(String key, CensoTuple value, Context<AgeType, AgeCount> context) {
+    public void map(Integer key, CensoTuple value, Context<AgeType, AgeCount> context) {
         AgeType ageType = AgeType.getAgeTypeByAge(value.getEdad());
         context.emit(ageType, new AgeCount(ageType, 1));
     }
