@@ -10,7 +10,6 @@ import mbaracus.model.CensoTuple;
 import mbaracus.utils.ArgumentParser;
 import mbaracus.utils.QueryExecutor;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +19,6 @@ import java.util.concurrent.ExecutionException;
 
 public class Client {
     public static final String MAP_NAME = "censo-baracus";
-    private static final String CLUSTER_NAME = null;
-    private static final String CLUSTER_PASSWORD = null;
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
@@ -70,15 +67,12 @@ public class Client {
 
     private static HazelcastInstance getHzClient(ArgumentParser parser) {
         ClientConfig ccfg = new ClientConfig();
-        if (CLUSTER_NAME != null && CLUSTER_PASSWORD != null) {
-            ccfg.getGroupConfig().setName(CLUSTER_NAME).setPassword(CLUSTER_PASSWORD);
+        if (parser.getClusterName() != null && parser.getClusterPassword() != null) {
+            ccfg.getGroupConfig().setName(parser.getClusterName()).setPassword(parser.getClusterPassword());
         }
 
-        String[] arrayAddresses = new String[2];
-        arrayAddresses[0] = parser.getIp1().getHostAddress();
-        arrayAddresses[1] = parser.getIp2().getHostAddress();
         ClientNetworkConfig net = new ClientNetworkConfig();
-        net.addAddress(arrayAddresses);
+        net.addAddress(parser.getClusterIP().getHostAddress());
         ccfg.setNetworkConfig(net);
 
         return HazelcastClient.newHazelcastClient(ccfg);

@@ -17,6 +17,8 @@ public class ArgumentParser {
     public static final String ARG_TOPE = "Dtope";
     public static final String ARG_INPATH = "DinPath";
     public static final String ARG_OUTPATH = "DoutPath";
+    public static final String ARG_PASSWORD = "Dpass";
+    public static final String ARG_GROUP = "Dgroup";
 
     public final List<Integer> validQueries;
 
@@ -25,11 +27,12 @@ public class ArgumentParser {
     private Integer query;
     private Path inputFile;
     private Path outputFile;
-    private InetAddress ip1;
-    private InetAddress ip2;
+    private InetAddress clusterIP;
     private Integer departmentsCount;
     private Integer habitantsLimit;
     private String province;
+    private String clusterPassword;
+    private String clusterName;
 
     public ArgumentParser() {
         this.validQueries = new ArrayList<>(5);
@@ -108,6 +111,24 @@ public class ArgumentParser {
                 .longOpt(ARG_OUTPATH)
                 .required()
                 .build());
+
+        options.addOption(Option.builder()
+                .argName(ARG_PASSWORD + "=value")
+                .hasArg()
+                .valueSeparator()
+                .desc("clusterPassword")
+                .longOpt(ARG_PASSWORD)
+                .required()
+                .build());
+
+        options.addOption(Option.builder()
+                .argName(ARG_GROUP + "=value")
+                .hasArg()
+                .valueSeparator()
+                .desc("clusterName")
+                .longOpt(ARG_GROUP)
+                .required()
+                .build());
     }
 
     public void parse(String[] args) throws ParseException, UnknownHostException {
@@ -122,9 +143,9 @@ public class ArgumentParser {
         query = Integer.valueOf(cmd.getOptionValue(ARG_QUERY));
         inputFile = Paths.get(cmd.getOptionValue(ARG_INPATH));
         outputFile = Paths.get(cmd.getOptionValue(ARG_OUTPATH));
-        String[] ips = cmd.getOptionValue(ARG_ADDRESSES).split(";");
-        ip1 = InetAddress.getByName(ips[0]);
-        ip2 = InetAddress.getByName(ips[1]);
+        clusterIP = InetAddress.getByName(cmd.getOptionValue(ARG_ADDRESSES));
+        clusterPassword = cmd.getOptionValue(ARG_PASSWORD);
+        clusterName = cmd.getOptionValue(ARG_GROUP);
         if (!validQueries.contains(query)) {
             throw new ParseException("invalid query value");
         }
@@ -160,12 +181,8 @@ public class ArgumentParser {
         return outputFile;
     }
 
-    public InetAddress getIp1() {
-        return ip1;
-    }
-
-    public InetAddress getIp2() {
-        return ip2;
+    public InetAddress getClusterIP() {
+        return clusterIP;
     }
 
     public Integer getDepartmentsCount() {
@@ -178,5 +195,13 @@ public class ArgumentParser {
 
     public String getProvince() {
         return province;
+    }
+
+    public String getClusterPassword() {
+        return clusterPassword;
+    }
+
+    public String getClusterName() {
+        return clusterName;
     }
 }
