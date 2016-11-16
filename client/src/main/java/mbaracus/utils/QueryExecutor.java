@@ -20,9 +20,7 @@ import mbaracus.query2.mr.MeanMapperFactory;
 import mbaracus.query2.mr.MeanReducerFactory;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public class QueryExecutor {
@@ -75,8 +73,8 @@ public class QueryExecutor {
 
     private void executeQuery2() throws IOException, InterruptedException, ExecutionException {
         JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
-        KeyValueSource<String, CensoTuple> source = KeyValueSource.fromMap(iMap);
-        Job<String, CensoTuple> job = tracker.newJob(source);
+        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
+        Job<Integer, CensoTuple> job = tracker.newJob(source);
 
         ICompletableFuture<Map<Integer, HouseCount>> future = job
                 .mapper(new CounterMapperFactory())
@@ -84,14 +82,6 @@ public class QueryExecutor {
                 .submit();
 
         Map<Integer, HouseCount> result = future.get();
-        Set<Integer> mySet = new HashSet<>();
-        for (Integer integer : result.keySet()) {
-            System.out.println(result.get(integer).toString());
-            mySet.add(result.get(integer).hogarId);
-        }
-        System.out.println("result = " + result.keySet().size());
-        System.out.println("mySet.size() = " + mySet.size());
-
         IMap<Integer, HouseCount> meanMap = client.getMap("meanMap");
         meanMap.putAll(result);
         KeyValueSource<Integer, HouseCount> meanSource = KeyValueSource.fromMap(meanMap);
@@ -103,9 +93,6 @@ public class QueryExecutor {
                 .submit();
 
         Map<HouseType, HouseTypeMean> meanResult = meanFuture.get();
-        for (HouseType houseType : meanResult.keySet()) {
-            System.out.println("meanResult.get(houseType) = " + meanResult.get(houseType));
-        }
         QueryPrinters.printResultQuery2(parser.getOutputFile(), meanResult);
     }
 
