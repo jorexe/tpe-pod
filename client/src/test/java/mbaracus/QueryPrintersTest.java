@@ -67,24 +67,24 @@ public class QueryPrintersTest {
 //        assertEquals("9 = 1,67", lines[9]);
 //    }
 
-    @Test
-    public void query3Test() throws IOException {
-        Map<String, Double> map = new HashMap<>();
-        map.put("Catan Lil", 0.4);
-        map.put("Telsen", 0.25);
-        map.put("Rinconada", 0.2);
-        map.put("San Blas de los Sauces", 0.18);
-        map.put("Tehuelches", 0.17);
-
-        QueryPrinters.printResultQuery3(QUERY_3_OUTPUT, map);
-
-        String[] lines = Files.lines(QUERY_3_OUTPUT).toArray(String[]::new);
-        assertEquals("Rinconada = 0,20", lines[0]);
-        assertEquals("Catan Lil = 0,40", lines[1]);
-        assertEquals("Telsen = 0,25", lines[2]);
-        assertEquals("San Blas de los Sauces = 0,18", lines[3]);
-        assertEquals("Tehuelches = 0,17", lines[4]);
-    }
+//    @Test
+//    public void query3Test() throws IOException {
+//        Map<String, Double> map = new HashMap<>();
+//        map.put("Catan Lil", 0.4);
+//        map.put("Telsen", 0.25);
+//        map.put("Rinconada", 0.2);
+//        map.put("San Blas de los Sauces", 0.18);
+//        map.put("Tehuelches", 0.17);
+//
+//        QueryPrinters.printResultQuery3(QUERY_3_OUTPUT, map);
+//
+//        String[] lines = Files.lines(QUERY_3_OUTPUT).toArray(String[]::new);
+//        assertEquals("Rinconada = 0,20", lines[0]);
+//        assertEquals("Catan Lil = 0,40", lines[1]);
+//        assertEquals("Telsen = 0,25", lines[2]);
+//        assertEquals("San Blas de los Sauces = 0,18", lines[3]);
+//        assertEquals("Tehuelches = 0,17", lines[4]);
+//    }
 
     @Test
     public void query4Test() throws IOException {

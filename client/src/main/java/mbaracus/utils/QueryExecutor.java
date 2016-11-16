@@ -18,10 +18,15 @@ import mbaracus.query2.mr.CounterMapperFactory;
 import mbaracus.query2.mr.CounterReducerFactory;
 import mbaracus.query2.mr.MeanMapperFactory;
 import mbaracus.query2.mr.MeanReducerFactory;
+import mbaracus.query3.model.DepartmentStat;
+import mbaracus.query3.mr.AnalfabetCounterMapperFactory;
+import mbaracus.query3.mr.AnalfabetCounterReducerFactory;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class QueryExecutor {
     private static final String DEFAULT_JOB_TRACKER = "default";
@@ -97,6 +102,23 @@ public class QueryExecutor {
     }
 
     private void executeQuery3() throws IOException, InterruptedException, ExecutionException {
+        JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
+        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
+        Job<Integer, CensoTuple> job = tracker.newJob(source);
+
+        ICompletableFuture<Map<Integer, DepartmentStat>> future = job
+                .mapper(new AnalfabetCounterMapperFactory())
+                .reducer(new AnalfabetCounterReducerFactory())
+                .submit();
+
+        Map<Integer, DepartmentStat> result = future.get();
+        List<DepartmentStat> list = result.values().stream().parallel().sorted((departmentStat, t1) -> {
+            if (departmentStat.getIndex() < t1.getIndex()) return 1;
+            if (departmentStat.getIndex() > t1.getIndex()) return -1;
+            return 0;
+        }).limit(parser.getDepartmentsCount()).collect(Collectors.toList());
+
+        QueryPrinters.printResultQuery3(parser.getOutputFile(), list);
     }
 
     private void executeQuery4() throws IOException, InterruptedException, ExecutionException {

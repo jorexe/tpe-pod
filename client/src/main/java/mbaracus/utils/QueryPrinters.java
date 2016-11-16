@@ -2,6 +2,7 @@ package mbaracus.utils;
 
 import mbaracus.enumerators.HouseType;
 import mbaracus.query2.model.HouseTypeMean;
+import mbaracus.query3.model.DepartmentStat;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
@@ -30,11 +31,11 @@ public class QueryPrinters {
         writeTo(output, toPrint);
     }
 
-    public static void printResultQuery3(Path output, Map<String, Double> map) throws IOException {
+    public static void printResultQuery3(Path output, List<DepartmentStat> departmentStatList) throws IOException {
         List<String> toPrint = new ArrayList<>();
 
-        for (String department: map.keySet()) {
-            toPrint.add(String.format("%s = %.2f", department, map.get(department)).replace(".", ","));
+        for (DepartmentStat departmentStat : departmentStatList) {
+            toPrint.add(String.format("%s = %.2f", departmentStat.getNombreDepto(), departmentStat.getIndex()).replace(".", ","));
         }
 
         writeTo(output, toPrint);

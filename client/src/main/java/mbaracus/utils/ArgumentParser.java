@@ -27,12 +27,12 @@ public class ArgumentParser {
     private Path outputFile;
     private InetAddress ip1;
     private InetAddress ip2;
-    private String departmentsCount;
-    private String habitantsLimit;
+    private Integer departmentsCount;
+    private Integer habitantsLimit;
     private String province;
 
     public ArgumentParser() {
-        this.validQueries = new ArrayList<>(4);
+        this.validQueries = new ArrayList<>(5);
         addValidQueries();
         addOptions();
     }
@@ -125,26 +125,26 @@ public class ArgumentParser {
         String[] ips = cmd.getOptionValue(ARG_ADDRESSES).split(";");
         ip1 = InetAddress.getByName(ips[0]);
         ip2 = InetAddress.getByName(ips[1]);
-        departmentsCount = cmd.getOptionValue(ARG_N);
-        habitantsLimit = cmd.getOptionValue(ARG_TOPE);
-        province = cmd.getOptionValue(ARG_PROV);
         if (!validQueries.contains(query)) {
             throw new ParseException("invalid query value");
         }
 
         // Combined parameters
         if (cmd.getOptionValue(ARG_QUERY).equals("3")) {
-            if (cmd.hasOption(ARG_N)) {
+            if (!cmd.hasOption(ARG_N)) {
                 throw new ParseException("n is mandatory");
             }
+            departmentsCount = Integer.parseInt(cmd.getOptionValue(ARG_N));
         }
         if (cmd.getOptionValue(ARG_QUERY).equals("4")) {
-            if (cmd.hasOption(ARG_PROV)) {
+            if (!cmd.hasOption(ARG_PROV)) {
                 throw new ParseException("prov is mandatory");
             }
-            if (cmd.hasOption(ARG_TOPE)) {
+            if (!cmd.hasOption(ARG_TOPE)) {
                 throw new ParseException("tope is mandatory");
             }
+            province = cmd.getOptionValue(ARG_PROV);
+            habitantsLimit = Integer.parseInt(cmd.getOptionValue(ARG_TOPE));
         }
     }
 
@@ -168,11 +168,11 @@ public class ArgumentParser {
         return ip2;
     }
 
-    public String getDepartmentsCount() {
+    public Integer getDepartmentsCount() {
         return departmentsCount;
     }
 
-    public String getHabitantsLimit() {
+    public Integer getHabitantsLimit() {
         return habitantsLimit;
     }
 
