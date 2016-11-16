@@ -1,15 +1,15 @@
 package mbaracus.query2.mr;
 
-import mbaracus.query2.model.HouseCount;
-import mbaracus.query2.model.QueryDataEntry;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
+import mbaracus.enumerators.HouseType;
+import mbaracus.query2.model.HouseCount;
+import mbaracus.query2.model.HouseTypeMean;
 
-public class MeanMapperFactory implements Mapper<Long, QueryDataEntry, String, HouseCount> {
+public class MeanMapperFactory implements Mapper<Integer, HouseCount, HouseType, HouseTypeMean> {
 
     @Override
-    public void map(Long key, QueryDataEntry value, Context<String, HouseCount> context) {
-//        context.emit(value.departmentName, new HouseCount(value.departmentName, 1));
+    public void map(Integer key, HouseCount value, Context<HouseType, HouseTypeMean> context) {
+        context.emit(value.tipoHogar, new HouseTypeMean(value.tipoHogar, value.count, 1));
     }
-
 }

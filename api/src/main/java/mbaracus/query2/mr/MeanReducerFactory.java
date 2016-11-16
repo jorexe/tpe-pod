@@ -20,7 +20,7 @@ public class MeanReducerFactory implements ReducerFactory<HouseType, HouseTypeMe
             @Override
             public void reduce(HouseTypeMean value) {
                 if (this.houseTypeMean == null) {
-                    this.houseTypeMean = value;
+                    this.houseTypeMean = new HouseTypeMean(value.houseType, value.mean, value.count);
                 } else {
                     int totalCount = houseTypeMean.count + value.count;
                     houseTypeMean.mean = ((houseTypeMean.mean * houseTypeMean.count) + (value.mean * value.count)) / totalCount;

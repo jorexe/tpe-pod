@@ -10,12 +10,12 @@ import java.io.IOException;
 public class HouseTypeMean implements DataSerializable {
     public HouseType houseType;
     public float mean;
-    public int count;
+    public Integer count;
 
     public HouseTypeMean() {
     }
 
-    public HouseTypeMean(HouseType houseType, float mean, int count) {
+    public HouseTypeMean(HouseType houseType, float mean, Integer count) {
         this.houseType = houseType;
         this.mean = mean;
         this.count = count;
@@ -30,8 +30,17 @@ public class HouseTypeMean implements DataSerializable {
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.houseType = HouseType.values()[in.readInt()];
+        this.houseType = HouseType.from(in.readInt());
         this.mean = in.readFloat();
         this.count = in.readInt();
+    }
+
+    @Override
+    public String toString() {
+        return "HouseTypeMean{" +
+                "houseType=" + houseType +
+                ", mean=" + mean +
+                ", count=" + count +
+                '}';
     }
 }

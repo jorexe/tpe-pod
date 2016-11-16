@@ -5,7 +5,6 @@ import com.hazelcast.mapreduce.Mapper;
 import mbaracus.model.CensoTuple;
 import mbaracus.query1.model.AgeCount;
 import mbaracus.query1.model.AgeType;
-import mbaracus.query1.model.Query1DataEntry;
 
 public class Query1MapperFactory implements Mapper<String, CensoTuple, AgeType, AgeCount> {
 

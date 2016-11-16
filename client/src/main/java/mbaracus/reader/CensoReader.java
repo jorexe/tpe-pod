@@ -23,7 +23,6 @@ public class CensoReader {
 
         CensoTuple data;
         while ((data = beanReader.read(CensoTuple.class, header, processors)) != null) {
-            System.out.println(data);
             data.setRowId(beanReader.getLineNumber());
             iMap.set(data.getNombredepto() + ", " + data.getNombreprov(), data);
         }
@@ -43,6 +42,15 @@ public class CensoReader {
                 new NotNull(), // Nombre departamento
                 new NotNull(), // Nombre provincia
                 new ParseInt(new NotNull()) // HogarId
+//                tipovivienda,
+//                calidadservicios,
+//                sexo,
+//                edad,
+//                alfabetismo,
+//                actividad,
+//                nombredepto,
+//                nombreprov,
+//                hogarid
         };
     }
 }

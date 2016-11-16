@@ -38,34 +38,34 @@ public class QueryPrintersTest {
         assertEquals("65-? = 10464", lines[2]);
     }
 
-    @Test
-    public void query2Test() throws IOException {
-        Map<Integer, Double> map = new HashMap<>();
-        map.put(0, 15.16);
-        map.put(1, 3.42);
-        map.put(2, 3.97);
-        map.put(3, 3.92);
-        map.put(4, 2.39);
-        map.put(5, 2.48);
-        map.put(6, 1.79);
-        map.put(7, 2.47);
-        map.put(8, 3.0);
-        map.put(9, 1.67);
-
-        QueryPrinters.printResultQuery2(QUERY_2_OUTPUT, map);
-
-        String[] lines = Files.lines(QUERY_2_OUTPUT).toArray(String[]::new);
-        assertEquals("0 = 15,16", lines[0]);
-        assertEquals("1 = 3,42", lines[1]);
-        assertEquals("2 = 3,97", lines[2]);
-        assertEquals("3 = 3,92", lines[3]);
-        assertEquals("4 = 2,39", lines[4]);
-        assertEquals("5 = 2,48", lines[5]);
-        assertEquals("6 = 1,79", lines[6]);
-        assertEquals("7 = 2,47", lines[7]);
-        assertEquals("8 = 3,00", lines[8]);
-        assertEquals("9 = 1,67", lines[9]);
-    }
+//    @Test
+//    public void query2Test() throws IOException {
+//        Map<Integer, Double> map = new HashMap<>();
+//        map.put(0, 15.16);
+//        map.put(1, 3.42);
+//        map.put(2, 3.97);
+//        map.put(3, 3.92);
+//        map.put(4, 2.39);
+//        map.put(5, 2.48);
+//        map.put(6, 1.79);
+//        map.put(7, 2.47);
+//        map.put(8, 3.0);
+//        map.put(9, 1.67);
+//
+//        QueryPrinters.printResultQuery2(QUERY_2_OUTPUT, map);
+//
+//        String[] lines = Files.lines(QUERY_2_OUTPUT).toArray(String[]::new);
+//        assertEquals("0 = 15,16", lines[0]);
+//        assertEquals("1 = 3,42", lines[1]);
+//        assertEquals("2 = 3,97", lines[2]);
+//        assertEquals("3 = 3,92", lines[3]);
+//        assertEquals("4 = 2,39", lines[4]);
+//        assertEquals("5 = 2,48", lines[5]);
+//        assertEquals("6 = 1,79", lines[6]);
+//        assertEquals("7 = 2,47", lines[7]);
+//        assertEquals("8 = 3,00", lines[8]);
+//        assertEquals("9 = 1,67", lines[9]);
+//    }
 
     @Test
     public void query3Test() throws IOException {
