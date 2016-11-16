@@ -10,6 +10,7 @@ import mbaracus.model.CensoTuple;
 import mbaracus.utils.ArgumentParser;
 import mbaracus.utils.QueryExecutor;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +45,7 @@ public class Client {
         logger.info("Fin del parseo de entrada" + timeDuration(startTime, endTime));
 
         HazelcastInstance client = getHzClient(parser);
-        System.out.println(client.getCluster());
-        IMap<String, CensoTuple> iMap = client.getMap(MAP_NAME);
+        IMap<Integer, CensoTuple> iMap = client.getMap(MAP_NAME);
 
         logger.info("Inicio de la lectura del archivo");
         startTime = System.currentTimeMillis();
@@ -54,6 +54,7 @@ public class Client {
 
         endTime = System.currentTimeMillis();
         logger.info("Fin de la lectura del archivo" + timeDuration(startTime, endTime));
+        logger.info(String.format("Se leyeron %d tuplas", iMap.keySet().size()));
 
         logger.info("Inicio del trabajo map/reduce");
         startTime = System.currentTimeMillis();

@@ -20,10 +20,10 @@ public class QueryExecutor {
     private static final String DEFAULT_JOB_TRACKER = "default";
 
     private HazelcastInstance client;
-    private IMap<String, CensoTuple> iMap;
+    private IMap<Integer, CensoTuple> iMap;
     private ArgumentParser parser;
 
-    public QueryExecutor(HazelcastInstance client, IMap<String, CensoTuple> iMap, ArgumentParser parser) {
+    public QueryExecutor(HazelcastInstance client, IMap<Integer, CensoTuple> iMap, ArgumentParser parser) {
         this.client = client;
         this.iMap = iMap;
         this.parser = parser;
@@ -51,8 +51,8 @@ public class QueryExecutor {
 
     private void executeQuery1() throws IOException, InterruptedException, ExecutionException {
         JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
-        KeyValueSource<String, CensoTuple> source = KeyValueSource.fromMap(iMap);
-        Job<String, CensoTuple> job = tracker.newJob(source);
+        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
+        Job<Integer, CensoTuple> job = tracker.newJob(source);
 
         ICompletableFuture<Map<AgeType, AgeCount>> future = job
                 .mapper(new Query1MapperFactory())
