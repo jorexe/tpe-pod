@@ -24,30 +24,10 @@ public enum HouseType {
         return this.loc;
     }
 
-    public static HouseType from(Integer i) {
-        switch (i) {
-            case 0:
-                return NO_DATA;
-            case 1:
-                return HOUSE;
-            case 2:
-                return RANCH;
-            case 3:
-                return BOX;
-            case 4:
-                return DEPARTMENT;
-            case 5:
-                return ROOM_RENTED;
-            case 6:
-                return ROOM_PENSION;
-            case 7:
-                return LOCAL;
-            case 8:
-                return MOBILE;
-            case 9:
-                return NONE;
-            default:
-                return ERROR;
-        }
+    public static HouseType from(int i) {
+        if (i > HouseType.values().length - 1 || i < 0)
+            return ERROR;
+        return HouseType.values()[i];
+
     }
 }

@@ -36,11 +36,13 @@ public class CensoTuple implements DataSerializable {
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeObject(tipoVivienda);
+        out.writeInt(rowId);
+        out.writeShort(tipoVivienda.ordinal());
         out.writeInt(calidadServicios);
         out.writeInt(sexo);
         out.writeInt(edad);
         out.writeInt(alfabetismo);
+        out.writeInt(actividad);
         out.writeUTF(nombredepto);
         out.writeUTF(nombreprov);
         out.writeInt(hogarId);
@@ -48,14 +50,16 @@ public class CensoTuple implements DataSerializable {
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        in.readObject();
-        in.readInt();
-        in.readInt();
-        in.readInt();
-        in.readInt();
-        in.readUTF();
-        in.readUTF();
-        in.readInt();
+        this.rowId = in.readInt();
+        this.tipoVivienda = HouseType.from(in.readShort());
+        this.calidadServicios = in.readInt();
+        this.sexo = in.readInt();
+        this.edad = in.readInt();
+        this.alfabetismo = in.readInt();
+        this.actividad = in.readInt();
+        this.nombredepto= in.readUTF();
+        this.nombreprov = in.readUTF();
+        this.hogarId = in.readInt();
     }
 
     @Override
