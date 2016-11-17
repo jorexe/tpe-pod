@@ -21,6 +21,10 @@ public class HouseTypeMean implements DataSerializable {
         this.count = count;
     }
 
+    public HouseTypeMean(float mean) {
+        this.mean = mean;
+    }
+
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
         out.writeInt(houseType.ordinal());

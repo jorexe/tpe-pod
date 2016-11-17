@@ -6,12 +6,7 @@ import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
 
-/**
- * Created by jorexe on 16/11/16.
- */
 public class DepartmentStat implements DataSerializable {
-
-
     private int analfabetos;
     private int totalHabitants;
     private String nombreDepto;
@@ -22,6 +17,12 @@ public class DepartmentStat implements DataSerializable {
         this.totalHabitants = totalHabitants;
         this.nombreDepto = nombreDepto;
         this.nombreProv = nombreProv;
+    }
+
+    public DepartmentStat(int analfabetos, int totalHabitants, String nombreDepto) {
+        this.analfabetos = analfabetos;
+        this.totalHabitants = totalHabitants;
+        this.nombreDepto = nombreDepto;
     }
 
     public DepartmentStat() {

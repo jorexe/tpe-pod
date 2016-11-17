@@ -118,7 +118,7 @@ public class ArgumentParser {
                 .valueSeparator()
                 .desc("clusterPassword")
                 .longOpt(ARG_PASSWORD)
-                .required()
+                .required(false)
                 .build());
 
         options.addOption(Option.builder()
@@ -127,7 +127,7 @@ public class ArgumentParser {
                 .valueSeparator()
                 .desc("clusterName")
                 .longOpt(ARG_GROUP)
-                .required()
+                .required(false)
                 .build());
     }
 

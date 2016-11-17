@@ -5,9 +5,6 @@ import com.hazelcast.mapreduce.Mapper;
 import mbaracus.model.CensoTuple;
 import mbaracus.query3.model.DepartmentStat;
 
-/**
- * Created by jorexe on 16/11/16.
- */
 public class AnalfabetCounterMapperFactory implements Mapper<Integer, CensoTuple, Integer, DepartmentStat> {
     @Override
     public void map(Integer key, CensoTuple value, Context<Integer, DepartmentStat> context) {
