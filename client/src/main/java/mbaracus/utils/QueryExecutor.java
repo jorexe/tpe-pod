@@ -4,6 +4,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ICompletableFuture;
 import com.hazelcast.core.IMap;
 import com.hazelcast.mapreduce.Job;
+import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 import mbaracus.enumerators.HouseType;
@@ -21,6 +22,9 @@ import mbaracus.query2.mr.MeanReducerFactory;
 import mbaracus.query3.model.DepartmentStat;
 import mbaracus.query3.mr.AnalfabetCounterMapperFactory;
 import mbaracus.query3.mr.AnalfabetCounterReducerFactory;
+import mbaracus.query4.model.Department;
+import mbaracus.query4.mr.ProvinceCounterMapperFactory;
+import mbaracus.query4.mr.ProvinceCounterReducerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,9 +66,7 @@ public class QueryExecutor {
     }
 
     private void executeQuery1() throws IOException, InterruptedException, ExecutionException {
-        JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
-        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
-        Job<Integer, CensoTuple> job = tracker.newJob(source);
+        Job<Integer, CensoTuple> job = getInitialJob();
 
         ICompletableFuture<Map<AgeType, AgeCount>> future = job
                 .mapper(new Query1MapperFactory())
@@ -77,9 +79,7 @@ public class QueryExecutor {
     }
 
     private void executeQuery2() throws IOException, InterruptedException, ExecutionException {
-        JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
-        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
-        Job<Integer, CensoTuple> job = tracker.newJob(source);
+        Job<Integer, CensoTuple> job = getInitialJob();
 
         ICompletableFuture<Map<Integer, HouseCount>> future = job
                 .mapper(new CounterMapperFactory())
@@ -91,7 +91,7 @@ public class QueryExecutor {
         meanMap.putAll(result);
         KeyValueSource<Integer, HouseCount> meanSource = KeyValueSource.fromMap(meanMap);
 
-        Job<Integer, HouseCount> meanJob = tracker.newJob(meanSource);
+        Job<Integer, HouseCount> meanJob = getJobTracker().newJob(meanSource);
         ICompletableFuture<Map<HouseType, HouseTypeMean>> meanFuture = meanJob
                 .mapper(new MeanMapperFactory())
                 .reducer(new MeanReducerFactory())
@@ -102,9 +102,7 @@ public class QueryExecutor {
     }
 
     private void executeQuery3() throws IOException, InterruptedException, ExecutionException {
-        JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
-        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
-        Job<Integer, CensoTuple> job = tracker.newJob(source);
+        Job<Integer, CensoTuple> job = getInitialJob();
 
         ICompletableFuture<Map<Integer, DepartmentStat>> future = job
                 .mapper(new AnalfabetCounterMapperFactory())
@@ -122,8 +120,31 @@ public class QueryExecutor {
     }
 
     private void executeQuery4() throws IOException, InterruptedException, ExecutionException {
+        Job<Integer, CensoTuple> job = getInitialJob();
+
+        JobCompletableFuture<Map<Integer, Department>> future = job
+                .mapper(new ProvinceCounterMapperFactory())
+                .reducer(new ProvinceCounterReducerFactory())
+                .submit();
+
+        Map<Integer, Department> result = future.get();
+
+        List<Department> filteredDepartments = result.values()
+                .stream().filter(department -> department.getHabitants() < parser.getHabitantsLimit())
+                .collect(Collectors.toList());
+
+        QueryPrinters.printResultQuery4(parser.getOutputFile(), filteredDepartments);
     }
 
     private void executeQuery5() throws IOException, InterruptedException, ExecutionException {
+    }
+
+    private Job<Integer, CensoTuple> getInitialJob() {
+        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
+        return getJobTracker().newJob(source);
+    }
+
+    private JobTracker getJobTracker() {
+        return client.getJobTracker(DEFAULT_JOB_TRACKER);
     }
 }

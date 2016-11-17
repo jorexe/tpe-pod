@@ -4,9 +4,6 @@ import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 import mbaracus.query3.model.DepartmentStat;
 
-/**
- * Created by jorexe on 16/11/16.
- */
 public class AnalfabetCounterReducerFactory implements ReducerFactory<Integer, DepartmentStat, DepartmentStat> {
     @Override
     public Reducer<DepartmentStat, DepartmentStat> newReducer(Integer key) {

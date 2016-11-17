@@ -3,6 +3,7 @@ package mbaracus.utils;
 import mbaracus.enumerators.HouseType;
 import mbaracus.query2.model.HouseTypeMean;
 import mbaracus.query3.model.DepartmentStat;
+import mbaracus.query4.model.Department;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
@@ -41,11 +42,11 @@ public class QueryPrinters {
         writeTo(output, toPrint);
     }
 
-    public static void printResultQuery4(Path output, Map<String, Integer> map) throws IOException {
+    public static void printResultQuery4(Path output, List<Department> list) throws IOException {
         List<String> toPrint = new ArrayList<>();
 
-        for (String department: map.keySet()) {
-            toPrint.add(department + " = " + map.get(department));
+        for (Department department: list) {
+            toPrint.add(department.getNombreDpto() + " = " + department.getHabitants());
         }
 
         writeTo(output, toPrint);
