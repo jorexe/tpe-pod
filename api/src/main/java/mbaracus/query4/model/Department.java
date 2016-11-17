@@ -17,6 +17,11 @@ public class Department implements DataSerializable {
         this.habitants = habitants;
     }
 
+    public Department(String nombreDpto, Integer habitants) {
+        this.nombreDpto = nombreDpto;
+        this.habitants = habitants;
+    }
+
     public Department() {
     }
 

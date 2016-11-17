@@ -1,5 +1,5 @@
+San Fernando = 972
 Comandante Fernández = 312
 General Güemes = 190
-Mayor Luis J. Fontana = 137
-San Fernando = 972
 Libertador General San Martín = 156
+Mayor Luis J. Fontana = 137

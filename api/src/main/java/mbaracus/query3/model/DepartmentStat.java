@@ -19,6 +19,12 @@ public class DepartmentStat implements DataSerializable {
         this.nombreProv = nombreProv;
     }
 
+    public DepartmentStat(int analfabetos, int totalHabitants, String nombreDepto) {
+        this.analfabetos = analfabetos;
+        this.totalHabitants = totalHabitants;
+        this.nombreDepto = nombreDepto;
+    }
+
     public DepartmentStat() {
     }
 
