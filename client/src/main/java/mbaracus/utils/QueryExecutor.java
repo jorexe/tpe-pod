@@ -21,10 +21,16 @@ import mbaracus.query2.mr.MeanReducerFactory;
 import mbaracus.query3.model.DepartmentStat;
 import mbaracus.query3.mr.AnalfabetCounterMapperFactory;
 import mbaracus.query3.mr.AnalfabetCounterReducerFactory;
+import mbaracus.query5.model.DepartmentCount;
+import mbaracus.query5.mr.DepartmentCounterMapperFactory;
+import mbaracus.query5.mr.DepartmentCounterReducerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -125,5 +131,27 @@ public class QueryExecutor {
     }
 
     private void executeQuery5() throws IOException, InterruptedException, ExecutionException {
+        JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
+        KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
+        Job<Integer, CensoTuple> job = tracker.newJob(source);
+
+        ICompletableFuture<Map<String, DepartmentCount>> future = job
+                .mapper(new DepartmentCounterMapperFactory())
+                .reducer(new DepartmentCounterReducerFactory())
+                .submit();
+
+        Map<String, DepartmentCount> result = future.get();
+        Map<Integer, List<String>> departments = new ConcurrentHashMap<>();
+        result.keySet().stream().parallel().forEach(x -> {
+            DepartmentCount departmentCount = result.get(x);
+            int thousands = getThousandsFromInteger(departmentCount.count);
+            departments.putIfAbsent(thousands, Collections.synchronizedList(new ArrayList<>()));
+            departments.get(thousands).add(departmentCount.departmentName);
+        });
+        QueryPrinters.printResultQuery5(parser.getOutputFile(), departments);
+    }
+
+    private int getThousandsFromInteger(int a) {
+        return a / 100;
     }
 }

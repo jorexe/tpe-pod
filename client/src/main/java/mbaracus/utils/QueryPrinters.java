@@ -3,7 +3,6 @@ package mbaracus.utils;
 import mbaracus.enumerators.HouseType;
 import mbaracus.query2.model.HouseTypeMean;
 import mbaracus.query3.model.DepartmentStat;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -51,13 +50,15 @@ public class QueryPrinters {
         writeTo(output, toPrint);
     }
 
-    public static void printResultQuery5(Path output, Map<Integer, List<Pair<String, String>>> map) throws IOException {
+    public static void printResultQuery5(Path output, Map<Integer, List<String>> map) throws IOException {
         List<String> toPrint = new LinkedList<>();
-
         for (Integer i: map.keySet()) {
             toPrint.add(i.toString());
-            for(Pair<String, String> p: map.get(i)) {
-                toPrint.add(p.getLeft() + " + " + p.getRight());
+            List<String> list = map.get(i);
+            for (int j = 0; j < list.size()-1; j++) {
+                for (int k = j; k < list.size(); k++) {
+                    toPrint.add(list.get(i) + " + " + list.get(j));
+                }
             }
             toPrint.add("");
         }
