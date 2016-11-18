@@ -23,6 +23,7 @@ public class CensoReader {
         final CellProcessor[] processors = getProcessors();
 
         CensoTuple data;
+        Integer row;
         while ((data = beanReader.read(CensoTuple.class, header, processors)) != null) {
             if (parser.getQuery() == 4) {
                 if (!data.getNombreprov().equals(parser.getProvince())) {
@@ -30,11 +31,21 @@ public class CensoReader {
                 }
             }
             data.setRowId(beanReader.getLineNumber());
-            iMap.set(beanReader.getLineNumber(), data);
+            row = beanReader.getLineNumber();
+
+            if (parser.getQuery() == 4 && !data.getNombreprov().equals(parser.getProvince())) {
+                // Skip this tuple so we don't waste time in unnecessary IO
+            } else {
+                addToMap(iMap, row, data);
+            }
         }
         if (beanReader != null) {
             beanReader.close();
         }
+    }
+
+    private static void addToMap(IMap<Integer, CensoTuple> iMap, Integer i, CensoTuple tuple) {
+        iMap.set(i, tuple);
     }
 
     private static CellProcessor[] getProcessors() {
