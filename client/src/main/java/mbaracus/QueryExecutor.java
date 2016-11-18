@@ -1,9 +1,12 @@
-package mbaracus.utils;
+package mbaracus;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ICompletableFuture;
 import com.hazelcast.core.IMap;
-import com.hazelcast.mapreduce.*;
+import com.hazelcast.mapreduce.Job;
+import com.hazelcast.mapreduce.JobCompletableFuture;
+import com.hazelcast.mapreduce.JobTracker;
+import com.hazelcast.mapreduce.KeyValueSource;
 import mbaracus.enumerators.HouseType;
 import mbaracus.model.CensoTuple;
 import mbaracus.query1.model.AgeCount;
@@ -26,6 +29,8 @@ import mbaracus.query5.model.DepartmentCount;
 import mbaracus.query5.mr.DepartmentCounterCombinerFactory;
 import mbaracus.query5.mr.DepartmentCounterMapperFactory;
 import mbaracus.query5.mr.DepartmentCounterReducerFactory;
+import mbaracus.utils.ArgumentParser;
+import mbaracus.utils.QueryPrinters;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +54,7 @@ public class QueryExecutor {
         this.parser = parser;
     }
 
-    public void submit(Integer query) throws IOException, InterruptedException, ExecutionException{
+    public void submit(Integer query) throws IOException, InterruptedException, ExecutionException {
         switch (query) {
             case 1:
                 executeQuery1();
@@ -134,7 +139,7 @@ public class QueryExecutor {
         Map<Integer, Department> result = future.get();
 
         List<Department> filteredDepartments = result.values()
-                .stream()
+                .stream().parallel()
                 .filter(department -> department.getNombreProv().equals(parser.getProvince()))
                 .filter(department -> department.getHabitants() < parser.getHabitantsLimit())
                 .collect(Collectors.toList());

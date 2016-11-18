@@ -8,7 +8,6 @@ import com.hazelcast.core.IMap;
 import mbaracus.reader.CensoReader;
 import mbaracus.model.CensoTuple;
 import mbaracus.utils.ArgumentParser;
-import mbaracus.utils.QueryExecutor;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

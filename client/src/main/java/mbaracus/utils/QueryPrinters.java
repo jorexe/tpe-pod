@@ -44,7 +44,7 @@ public class QueryPrinters {
     public static void printResultQuery4(Path output, List<Department> list) throws IOException {
         List<String> toPrint = new ArrayList<>();
 
-        for (Department department: list) {
+        for (Department department : list) {
             toPrint.add(department.getNombreDpto() + " = " + department.getHabitants());
         }
 
@@ -53,16 +53,17 @@ public class QueryPrinters {
 
     public static void printResultQuery5(Path output, Map<Integer, List<String>> map) throws IOException {
         List<String> toPrint = new LinkedList<>();
-        map.keySet().stream().sorted().forEach( x -> {
+        map.keySet().stream().sorted().forEach(x -> {
             List<String> list = map.get(x);
             if (list.size() > 1) {
-                toPrint.add(Integer.toString(x*100));
-                for (int j = 0; j < list.size()-1; j++) {
-                    for (int k = j+1; k < list.size(); k++) {
+                toPrint.add(Integer.toString(x * 100));
+                for (int j = 0; j < list.size() - 1; j++) {
+                    for (int k = j + 1; k < list.size(); k++) {
                         toPrint.add(list.get(j) + " + " + list.get(k));
                     }
                 }
             }
+            toPrint.add("");
         });
         writeTo(output, toPrint);
     }

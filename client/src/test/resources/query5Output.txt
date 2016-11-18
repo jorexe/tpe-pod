@@ -1,7 +1,7 @@
 1300
 Quilmes + San Fernando
-Almirante Brown + Quilmes
-Almirante Brown + San Fernando
+Quilmes + Almirante Brown
+San Fernando + Almirante Brown
 
 1400
 Merlo + General San Martín

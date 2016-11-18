@@ -12,15 +12,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
 public class QueryPrintersTest {
-    private static final String PREFIX = "./client/src/test/resources/";
+    private static final String PREFIX = "../client/src/test/resources/";
     private static final Path QUERY_1_OUTPUT = Paths.get(PREFIX + "query1Output.txt");
     private static final Path QUERY_2_OUTPUT = Paths.get(PREFIX + "query2Output.txt");
     private static final Path QUERY_3_OUTPUT = Paths.get(PREFIX + "query3Output.txt");
@@ -110,26 +107,26 @@ public class QueryPrintersTest {
 
     @Test
     public void query5Test() throws IOException {
-//        Map<Integer, List<Pair<String, String>>> map = new HashMap<>();
-//        List<Pair<String, String>> l1 = new LinkedList<>();
-//        List<Pair<String, String>> l2 = new LinkedList<>();
-//        l1.add(Pair.of("Quilmes", "San Fernando"));
-//        l1.add(Pair.of("Almirante Brown", "Quilmes"));
-//        l1.add(Pair.of("Almirante Brown", "San Fernando"));
-//        l2.add(Pair.of("Merlo", "General San Martín"));
-//        map.put(1300, l1);
-//        map.put(1400, l2);
-//
-//        QueryPrinters.printResultQuery5(QUERY_5_OUTPUT, map);
-//
-//        String[] lines = Files.lines(QUERY_5_OUTPUT).toArray(String[]::new);
-//        assertEquals("1300", lines[0]);
-//        assertEquals("Quilmes + San Fernando", lines[1]);
-//        assertEquals("Almirante Brown + Quilmes", lines[2]);
-//        assertEquals("Almirante Brown + San Fernando", lines[3]);
-//        assertEquals("", lines[4]);
-//        assertEquals("1400", lines[5]);
-//        assertEquals("Merlo + General San Martín", lines[6]);
-//    }
+        Map<Integer, List<String>> map = new HashMap<>();
+        List<String> l1 = new LinkedList<>();
+        List<String> l2 = new LinkedList<>();
+        l1.add("Quilmes");
+        l1.add("San Fernando");
+        l1.add("Almirante Brown");
+        l2.add("Merlo");
+        l2.add("General San Martín");
+        map.put(13, l1);
+        map.put(14, l2);
+
+        QueryPrinters.printResultQuery5(QUERY_5_OUTPUT, map);
+
+        String[] lines = Files.lines(QUERY_5_OUTPUT).toArray(String[]::new);
+        assertEquals("1300", lines[0]);
+        assertEquals("Quilmes + San Fernando", lines[1]);
+        assertEquals("Quilmes + Almirante Brown", lines[2]);
+        assertEquals("San Fernando + Almirante Brown", lines[3]);
+        assertEquals("", lines[4]);
+        assertEquals("1400", lines[5]);
+        assertEquals("Merlo + General San Martín", lines[6]);
     }
 }
