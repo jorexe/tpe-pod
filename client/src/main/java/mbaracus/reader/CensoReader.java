@@ -2,6 +2,7 @@ package mbaracus.reader;
 
 import com.hazelcast.core.IMap;
 import mbaracus.model.CensoTuple;
+import mbaracus.utils.ArgumentParser;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -13,7 +14,7 @@ import java.io.*;
 import java.nio.file.Path;
 
 public class CensoReader {
-    public static void parseCsv(final IMap<Integer, CensoTuple> iMap, Path path) throws IOException {
+    public static void parseCsv(final IMap<Integer, CensoTuple> iMap, Path path, ArgumentParser parser) throws IOException {
         final InputStream is = new FileInputStream(path.toString());
         final Reader aReader = new InputStreamReader(is);
         ICsvBeanReader beanReader = new CsvBeanReader(aReader, CsvPreference.STANDARD_PREFERENCE);
@@ -22,13 +23,24 @@ public class CensoReader {
         final CellProcessor[] processors = getProcessors();
 
         CensoTuple data;
+        Integer row;
         while ((data = beanReader.read(CensoTuple.class, header, processors)) != null) {
             data.setRowId(beanReader.getLineNumber());
-            iMap.set(beanReader.getLineNumber(), data);
+            row = beanReader.getLineNumber();
+
+            if (parser.getQuery() == 4 && !data.getNombreprov().equals(parser.getProvince())) {
+                // Skip this tuple so we don't waste time in unnecessary IO
+            } else {
+                addToMap(iMap, row, data);
+            }
         }
         if (beanReader != null) {
             beanReader.close();
         }
+    }
+
+    private static void addToMap(IMap<Integer, CensoTuple> iMap, Integer i, CensoTuple tuple) {
+        iMap.set(i, tuple);
     }
 
     private static CellProcessor[] getProcessors() {
@@ -42,15 +54,6 @@ public class CensoReader {
                 new NotNull(), // Nombre departamento
                 new NotNull(), // Nombre provincia
                 new ParseInt(new NotNull()) // HogarId
-//                tipovivienda,
-//                calidadservicios,
-//                sexo,
-//                edad,
-//                alfabetismo,
-//                actividad,
-//                nombredepto,
-//                nombreprov,
-//                hogarid
         };
     }
 }
