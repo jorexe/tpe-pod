@@ -25,7 +25,7 @@ public class DepartmentCounterReducerFactory implements ReducerFactory<String, D
 
             @Override
             public DepartmentCount finalizeReduce() {
-                return new DepartmentCount(this.count, this.dep);
+                return new DepartmentCount(this.dep, this.count);
             }
         };
     }

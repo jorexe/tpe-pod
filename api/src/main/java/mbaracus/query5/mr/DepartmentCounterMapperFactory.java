@@ -9,7 +9,7 @@ public class DepartmentCounterMapperFactory implements Mapper<Integer, CensoTupl
 
     @Override
     public void map(Integer key, CensoTuple value, Context<String, DepartmentCount> context) {
-        context.emit(value.getNombredepto(), new DepartmentCount(1, value.getNombredepto()));
+        context.emit(value.getNombredepto(), new DepartmentCount(value.getNombredepto(), 1));
     }
 
 }

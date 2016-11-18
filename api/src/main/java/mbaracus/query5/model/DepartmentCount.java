@@ -7,15 +7,16 @@ import com.hazelcast.nio.serialization.DataSerializable;
 import java.io.IOException;
 
 public class DepartmentCount implements DataSerializable {
-    public Integer count;
+
     public String departmentName;
+    public Integer count;
 
     public DepartmentCount() {
     }
 
-    public DepartmentCount(Integer count, String departmentName) {
-        this.count = count;
+    public DepartmentCount(String departmentName, Integer count) {
         this.departmentName = departmentName;
+        this.count = count;
     }
 
     @Override
@@ -33,7 +34,8 @@ public class DepartmentCount implements DataSerializable {
     @Override
     public String toString() {
         return "DepartmentCount{" +
-                ", count=" + count +
+                "count=" + count +
+                ", departmentName='" + departmentName + '\'' +
                 '}';
     }
 }
