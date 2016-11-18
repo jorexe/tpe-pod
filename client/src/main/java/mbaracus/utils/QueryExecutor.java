@@ -134,7 +134,9 @@ public class QueryExecutor {
         Map<Integer, Department> result = future.get();
 
         List<Department> filteredDepartments = result.values()
-                .stream().filter(department -> department.getHabitants() < parser.getHabitantsLimit())
+                .stream()
+                .filter(department -> department.getNombreProv().equals(parser.getProvince()))
+                .filter(department -> department.getHabitants() < parser.getHabitantsLimit())
                 .collect(Collectors.toList());
 
         QueryPrinters.printResultQuery4(parser.getOutputFile(), filteredDepartments);

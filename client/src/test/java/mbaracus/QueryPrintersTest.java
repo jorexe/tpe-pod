@@ -108,8 +108,8 @@ public class QueryPrintersTest {
         assertEquals("Mayor Luis J. Fontana = 137", lines[4]);
     }
 
-//    @Test
-//    public void query5Test() throws IOException {
+    @Test
+    public void query5Test() throws IOException {
 //        Map<Integer, List<Pair<String, String>>> map = new HashMap<>();
 //        List<Pair<String, String>> l1 = new LinkedList<>();
 //        List<Pair<String, String>> l2 = new LinkedList<>();
@@ -131,4 +131,5 @@ public class QueryPrintersTest {
 //        assertEquals("1400", lines[5]);
 //        assertEquals("Merlo + General San Martín", lines[6]);
 //    }
+    }
 }
