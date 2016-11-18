@@ -3,10 +3,7 @@ package mbaracus.utils;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ICompletableFuture;
 import com.hazelcast.core.IMap;
-import com.hazelcast.mapreduce.Job;
-import com.hazelcast.mapreduce.JobCompletableFuture;
-import com.hazelcast.mapreduce.JobTracker;
-import com.hazelcast.mapreduce.KeyValueSource;
+import com.hazelcast.mapreduce.*;
 import mbaracus.enumerators.HouseType;
 import mbaracus.model.CensoTuple;
 import mbaracus.query1.model.AgeCount;
@@ -26,6 +23,7 @@ import mbaracus.query4.model.Department;
 import mbaracus.query4.mr.ProvinceCounterMapperFactory;
 import mbaracus.query4.mr.ProvinceCounterReducerFactory;
 import mbaracus.query5.model.DepartmentCount;
+import mbaracus.query5.mr.DepartmentCounterCombinerFactory;
 import mbaracus.query5.mr.DepartmentCounterMapperFactory;
 import mbaracus.query5.mr.DepartmentCounterReducerFactory;
 
@@ -146,11 +144,20 @@ public class QueryExecutor {
         JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
         KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
         Job<Integer, CensoTuple> job = tracker.newJob(source);
+        JobCompletableFuture<Map<String, DepartmentCount>> future;
 
-        ICompletableFuture<Map<String, DepartmentCount>> future = job
-                .mapper(new DepartmentCounterMapperFactory())
-                .reducer(new DepartmentCounterReducerFactory())
-                .submit();
+        if (parser.useCombiners()) {
+            future = job
+                    .mapper(new DepartmentCounterMapperFactory())
+                    .combiner(new DepartmentCounterCombinerFactory())
+                    .reducer(new DepartmentCounterReducerFactory())
+                    .submit();
+        } else {
+            future = job
+                    .mapper(new DepartmentCounterMapperFactory())
+                    .reducer(new DepartmentCounterReducerFactory())
+                    .submit();
+        }
 
         Map<String, DepartmentCount> result = future.get();
         Map<Integer, List<String>> departments = new ConcurrentHashMap<>();

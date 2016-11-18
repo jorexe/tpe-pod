@@ -19,6 +19,7 @@ public class ArgumentParser {
     public static final String ARG_OUTPATH = "DoutPath";
     public static final String ARG_PASSWORD = "Dpass";
     public static final String ARG_GROUP = "Dgroup";
+    public static final String ARG_COMBINERS = "c";
 
     public final List<Integer> validQueries;
 
@@ -33,6 +34,7 @@ public class ArgumentParser {
     private String province;
     private String clusterPassword;
     private String clusterName;
+    private boolean useCombiners;
 
     public ArgumentParser() {
         this.validQueries = new ArrayList<>(5);
@@ -129,6 +131,7 @@ public class ArgumentParser {
                 .longOpt(ARG_GROUP)
                 .required(false)
                 .build());
+        options.addOption(ARG_COMBINERS, false, "enable combinators");
     }
 
     public void parse(String[] args) throws ParseException, UnknownHostException {
@@ -146,6 +149,8 @@ public class ArgumentParser {
         clusterIP = InetAddress.getByName(cmd.getOptionValue(ARG_ADDRESSES));
         clusterPassword = cmd.getOptionValue(ARG_PASSWORD);
         clusterName = cmd.getOptionValue(ARG_GROUP);
+        useCombiners = cmd.hasOption(ARG_COMBINERS);
+
         if (!validQueries.contains(query)) {
             throw new ParseException("invalid query value");
         }
@@ -203,5 +208,9 @@ public class ArgumentParser {
 
     public String getClusterName() {
         return clusterName;
+    }
+
+    public boolean useCombiners() {
+        return useCombiners;
     }
 }
