@@ -4,6 +4,7 @@ import mbaracus.enumerators.HouseType;
 import mbaracus.query2.model.HouseTypeMean;
 import mbaracus.query3.model.DepartmentStat;
 import mbaracus.query4.model.Department;
+import mbaracus.query5.model.DepartmentCount;
 import mbaracus.utils.QueryPrinters;
 import org.junit.Before;
 import org.junit.Test;
@@ -107,26 +108,22 @@ public class QueryPrintersTest {
 
     @Test
     public void query5Test() throws IOException {
-        Map<Integer, List<String>> map = new HashMap<>();
-        List<String> l1 = new LinkedList<>();
-        List<String> l2 = new LinkedList<>();
-        l1.add("Quilmes");
-        l1.add("San Fernando");
-        l1.add("Almirante Brown");
-        l2.add("Merlo");
-        l2.add("General San Martín");
-        map.put(13, l1);
-        map.put(14, l2);
+        Map<String, DepartmentCount> map = new HashMap<>();
+        map.put("Quilmes", new DepartmentCount("Quilmes", "Buenos Aires", 1327));
+        map.put("San Fernando", new DepartmentCount("San Fernando", "Buenos Aires", 1328));
+        map.put("Almirante Brown", new DepartmentCount("Almirante Brown", "Buenos Aires", 1399));
+        map.put("Merlo", new DepartmentCount("Merlo", "Buenos Aires", 1415));
+        map.put("General San Martín", new DepartmentCount("General San Martín", "Buenos Aires", 1417));
 
         QueryPrinters.printResultQuery5(QUERY_5_OUTPUT, map);
 
         String[] lines = Files.lines(QUERY_5_OUTPUT).toArray(String[]::new);
         assertEquals("1300", lines[0]);
-        assertEquals("Quilmes + San Fernando", lines[1]);
-        assertEquals("Quilmes + Almirante Brown", lines[2]);
-        assertEquals("San Fernando + Almirante Brown", lines[3]);
+        assertEquals("San Fernando (Buenos Aires) + Quilmes (Buenos Aires)", lines[1]);
+        assertEquals("San Fernando (Buenos Aires) + Almirante Brown (Buenos Aires)", lines[2]);
+        assertEquals("Quilmes (Buenos Aires) + Almirante Brown (Buenos Aires)", lines[3]);
         assertEquals("", lines[4]);
         assertEquals("1400", lines[5]);
-        assertEquals("Merlo + General San Martín", lines[6]);
+        assertEquals("General San Martín (Buenos Aires) + Merlo (Buenos Aires)", lines[6]);
     }
 }

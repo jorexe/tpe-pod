@@ -33,11 +33,8 @@ import mbaracus.utils.ArgumentParser;
 import mbaracus.utils.QueryPrinters;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -167,18 +164,7 @@ public class QueryExecutor {
         }
 
         Map<String, DepartmentCount> result = future.get();
-        Map<Integer, List<String>> departments = new ConcurrentHashMap<>();
-        result.keySet().stream().parallel().forEach(x -> {
-            DepartmentCount departmentCount = result.get(x);
-            int thousands = getThousandsFromInteger(departmentCount.count);
-            departments.putIfAbsent(thousands, Collections.synchronizedList(new ArrayList<>()));
-            departments.get(thousands).add(departmentCount.departmentName);
-        });
-        QueryPrinters.printResultQuery5(parser.getOutputFile(), departments);
-    }
-
-    private int getThousandsFromInteger(int a) {
-        return a / 100;
+        QueryPrinters.printResultQuery5(parser.getOutputFile(), result);
     }
 
     private Job<Integer, CensoTuple> getInitialJob() {

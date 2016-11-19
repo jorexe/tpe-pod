@@ -1,8 +1,8 @@
 1300
-Quilmes + San Fernando
-Quilmes + Almirante Brown
-San Fernando + Almirante Brown
+San Fernando (Buenos Aires) + Quilmes (Buenos Aires)
+San Fernando (Buenos Aires) + Almirante Brown (Buenos Aires)
+Quilmes (Buenos Aires) + Almirante Brown (Buenos Aires)
 
 1400
-Merlo + General San Martín
+General San Martín (Buenos Aires) + Merlo (Buenos Aires)
 

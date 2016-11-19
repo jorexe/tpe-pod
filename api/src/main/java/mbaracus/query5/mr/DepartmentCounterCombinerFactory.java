@@ -15,6 +15,7 @@ public class DepartmentCounterCombinerFactory implements CombinerFactory<String,
 
             private int count;
             private String dep;
+            private String prov;
 
             @Override
             public void combine(DepartmentCount value) {
@@ -22,11 +23,14 @@ public class DepartmentCounterCombinerFactory implements CombinerFactory<String,
                 if (dep == null) {
                     this.dep = value.departmentName;
                 }
+                if (prov == null) {
+                    this.prov = value.departmentProvince;
+                }
             }
 
             @Override
             public DepartmentCount finalizeChunk() {
-                return new DepartmentCount(dep, count);
+                return new DepartmentCount(dep, prov, count);
             }
 
             @Override

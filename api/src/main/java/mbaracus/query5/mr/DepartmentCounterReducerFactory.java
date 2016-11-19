@@ -11,6 +11,7 @@ public class DepartmentCounterReducerFactory implements ReducerFactory<String, D
         return new Reducer<DepartmentCount, DepartmentCount>() {
             private int count;
             private String dep;
+            private String prov;
 
             @Override
             public void beginReduce() {
@@ -21,11 +22,12 @@ public class DepartmentCounterReducerFactory implements ReducerFactory<String, D
             public void reduce(DepartmentCount value) {
                 this.count += value.count;
                 this.dep = value.departmentName;
+                this.prov = value.departmentProvince;
             }
 
             @Override
             public DepartmentCount finalizeReduce() {
-                return new DepartmentCount(this.dep, this.count);
+                return new DepartmentCount(this.dep, this.prov, this.count);
             }
         };
     }
