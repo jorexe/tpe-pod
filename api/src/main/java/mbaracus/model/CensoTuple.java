@@ -8,16 +8,17 @@ import mbaracus.enumerators.HouseType;
 import java.io.IOException;
 
 public class CensoTuple implements DataSerializable {
-    private Integer rowId;
-    private HouseType tipoVivienda;
-    private Integer calidadServicios;
-    private Integer sexo;
-    private Integer edad;
-    private Integer alfabetismo;
-    private Integer actividad;
-    private String nombredepto;
-    private String nombreprov;
-    private Integer hogarId;
+
+    protected Integer rowId;
+    protected HouseType tipoVivienda;
+    protected Integer calidadServicios;
+    protected Integer sexo;
+    protected Integer edad;
+    protected Integer alfabetismo;
+    protected Integer actividad;
+    protected String nombredepto;
+    protected String nombreprov;
+    protected Integer hogarId;
 
     public CensoTuple() {
     }
