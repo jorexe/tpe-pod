@@ -8,7 +8,7 @@ import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 import mbaracus.enumerators.HouseType;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.query1.model.AgeCount;
 import mbaracus.query1.model.AgeType;
 import mbaracus.query1.mr.Query1MapperFactory;
@@ -116,11 +116,12 @@ class QueryExecutor {
                 .submit();
 
         Map<Integer, DepartmentStat> result = future.get();
-        List<DepartmentStat> list = result.values().stream().parallel().sorted((departmentStat, t1) -> {
-            if (departmentStat.getIndex() < t1.getIndex()) return 1;
-            if (departmentStat.getIndex() > t1.getIndex()) return -1;
-            return 0;
-        }).limit(parser.getDepartmentsCount()).collect(Collectors.toList());
+        List<DepartmentStat> list = result.values().stream().parallel()
+                .sorted((departmentStat, t1) -> {
+                    if (departmentStat.getIndex() < t1.getIndex()) return 1;
+                    if (departmentStat.getIndex() > t1.getIndex()) return -1;
+                    return 0;
+                }).limit(parser.getDepartmentsCount()).collect(Collectors.toList());
 
         QueryPrinters.printResultQuery3(parser.getOutputFile(), list);
     }
@@ -139,7 +140,8 @@ class QueryExecutor {
                 .stream().parallel()
                 .filter(department -> department.getNombreProv().equals(parser.getProvince()))
                 .filter(department -> department.getHabitants() < parser.getHabitantsLimit())
-                .collect(Collectors.toList());
+                .sorted((d1, d2) -> (-1) * Integer.compare(d1.getHabitants(), d2.getHabitants())
+                ).collect(Collectors.toList());
 
         QueryPrinters.printResultQuery4(parser.getOutputFile(), filteredDepartments);
     }

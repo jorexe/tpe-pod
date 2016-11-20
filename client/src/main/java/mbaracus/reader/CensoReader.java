@@ -1,8 +1,7 @@
 package mbaracus.reader;
 
 import com.hazelcast.core.IMap;
-import mbaracus.model.CensoTuple;
-import mbaracus.query5.model.Query5CensoTuple;
+import mbaracus.tuples.*;
 import mbaracus.utils.ArgumentParser;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
@@ -41,65 +40,81 @@ public class CensoReader {
     }
 
     private static String[] getHeadersByQuery(ICsvBeanReader beanReader, int query) throws IOException {
+        String[] defaultHeaders = beanReader.getHeader(true); // Remove headers
+        // {"tipovivienda","calidadservicios","sexo","edad","alfabetismo","actividad","nombredepto","nombreprov","hogarid"}
         switch (query) {
             case 1:
-                //TODO Implement headers
-                break;
+                return new String[]{null, null, null, "edad", null, null, null, null, null};
             case 2:
-                //TODO Implement headers
-                break;
+                return new String[]{"tipovivienda", null, null, null, null, null, null, null, "hogarid"};
             case 3:
-                //TODO Implement headers
-                break;
+                return new String[]{null, null, null, null, "alfabetismo", null, "nombredepto", "nombreprov", null};
             case 4:
-                //TODO Implement headers
-                break;
+                return new String[]{null, null, null, null, null, null, "nombredepto", "nombreprov", null};
             case 5:
-                beanReader.getHeader(true);
-                return new String[] {null, null, null, null, null, null, "nombredepto", "nombreprov", null};
+                return new String[]{null, null, null, null, null, null, "nombredepto", "nombreprov", null};
+            default:
+                return defaultHeaders;
         }
-        //TODO This is the default header, delete this line when all cases completed
-        //return new String[] {"tipovivienda","calidadservicios","sexo","edad","alfabetismo","actividad","nombredepto","nombreprov","hogarid"};
-        //Return default header otherwise
-        return beanReader.getHeader(true);
     }
 
     private static Class<? extends CensoTuple> getClassByQuery(int query) {
         switch (query) {
             case 1:
-                //TODO Implement class
-                break;
+                return Query1CensoTuple.class;
             case 2:
-                //TODO Implement class
-                break;
+                return Query2CensoTuple.class;
             case 3:
-                //TODO Implement class
-                break;
+                return Query3CensoTuple.class;
             case 4:
-                //TODO Implement class
-                break;
+                return Query4CensoTuple.class;
             case 5:
                 return Query5CensoTuple.class;
+            default:
+                return CensoTuple.class;
         }
-        return CensoTuple.class;
     }
 
     private static CellProcessor[] getProcessorsByQuery(int query) {
         switch (query) {
             case 1:
-                //TODO Implement processors
-                break;
+                return new CellProcessor[]{
+                        null, // Tipo vivienda
+                        null, // Calidad servicios
+                        null, // Sexo
+                        new ParseInt(new NotNull()), // Edad
+                        null, // Alfabetismo
+                        null, // Actividad
+                        null, // Nombre departamento
+                        null, // Nombre provincia
+                        null // HogarId
+                };
             case 2:
-                //TODO Implement processors
-                break;
+                return new CellProcessor[]{
+                        new ParseInt(new NotNull()), // Tipo vivienda
+                        null, // Calidad servicios
+                        null, // Sexo
+                        null, // Edad
+                        null, // Alfabetismo
+                        null, // Actividad
+                        null, // Nombre departamento
+                        null, // Nombre provincia
+                        new ParseInt(new NotNull()) // HogarId
+                };
             case 3:
-                //TODO Implement processors
-                break;
+                return new CellProcessor[]{
+                        null, // Tipo vivienda
+                        null, // Calidad servicios
+                        null, // Sexo
+                        null, // Edad
+                        new ParseInt(new NotNull()), // Alfabetismo
+                        null, // Actividad
+                        new NotNull(), // Nombre departamento
+                        new NotNull(), // Nombre provincia
+                        null // HogarId
+                };
             case 4:
-                //TODO Implement processors
-                break;
-            case 5:
-                return new CellProcessor[] {
+                return new CellProcessor[]{
                         null, // Tipo vivienda
                         null, // Calidad servicios
                         null, // Sexo
@@ -110,12 +125,25 @@ public class CensoReader {
                         new NotNull(), // Nombre provincia
                         null // HogarId
                 };
+            case 5:
+                return new CellProcessor[]{
+                        null, // Tipo vivienda
+                        null, // Calidad servicios
+                        null, // Sexo
+                        null, // Edad
+                        null, // Alfabetismo
+                        null, // Actividad
+                        new NotNull(), // Nombre departamento
+                        new NotNull(), // Nombre provincia
+                        null // HogarId
+                };
+            default:
+                return getDefaultProcessors();
         }
-        return getDefaultProcessors();
     }
 
     private static CellProcessor[] getDefaultProcessors() {
-        return new CellProcessor[] {
+        return new CellProcessor[]{
                 new ParseInt(new NotNull()), // Tipo vivienda
                 new ParseInt(new NotNull()), // Calidad servicios
                 new ParseInt(new NotNull()), // Sexo

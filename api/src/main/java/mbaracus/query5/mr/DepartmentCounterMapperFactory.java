@@ -2,7 +2,7 @@ package mbaracus.query5.mr;
 
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.query5.model.DepartmentCount;
 
 public class DepartmentCounterMapperFactory implements Mapper<Integer, CensoTuple, String, DepartmentCount> {

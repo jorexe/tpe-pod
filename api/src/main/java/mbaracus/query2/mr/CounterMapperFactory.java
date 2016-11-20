@@ -2,7 +2,7 @@ package mbaracus.query2.mr;
 
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.query2.model.HouseCount;
 
 public class CounterMapperFactory implements Mapper<Integer, CensoTuple, Integer, HouseCount> {

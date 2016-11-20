@@ -2,7 +2,7 @@ package mbaracus.query3.mr;
 
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.query3.model.DepartmentStat;
 
 public class AnalfabetCounterMapperFactory implements Mapper<Integer, CensoTuple, Integer, DepartmentStat> {

@@ -5,7 +5,7 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.reader.CensoReader;
 import mbaracus.utils.ArgumentParser;
 import org.apache.commons.cli.ParseException;
