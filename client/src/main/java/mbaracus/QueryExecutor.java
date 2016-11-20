@@ -38,20 +38,20 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-public class QueryExecutor {
+class QueryExecutor {
     private static final String DEFAULT_JOB_TRACKER = "default";
 
     private HazelcastInstance client;
     private IMap<Integer, CensoTuple> iMap;
     private ArgumentParser parser;
 
-    public QueryExecutor(HazelcastInstance client, IMap<Integer, CensoTuple> iMap, ArgumentParser parser) {
+    QueryExecutor(HazelcastInstance client, IMap<Integer, CensoTuple> iMap, ArgumentParser parser) {
         this.client = client;
         this.iMap = iMap;
         this.parser = parser;
     }
 
-    public void submit(Integer query) throws IOException, InterruptedException, ExecutionException {
+    void submit(Integer query) throws IOException, InterruptedException, ExecutionException {
         switch (query) {
             case 1:
                 executeQuery1();

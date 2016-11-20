@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArgumentParser {
-    public static final String ARG_ADDRESSES = "Daddresses";
-    public static final String ARG_QUERY = "Dquery";
-    public static final String ARG_N = "Dn";
-    public static final String ARG_PROV = "Dprov";
-    public static final String ARG_TOPE = "Dtope";
-    public static final String ARG_INPATH = "DinPath";
-    public static final String ARG_OUTPATH = "DoutPath";
-    public static final String ARG_PASSWORD = "Dpass";
-    public static final String ARG_GROUP = "Dgroup";
-    public static final String ARG_COMBINERS = "c";
+    private static final String ARG_ADDRESSES = "Daddresses";
+    private static final String ARG_QUERY = "Dquery";
+    private static final String ARG_N = "Dn";
+    private static final String ARG_PROV = "Dprov";
+    private static final String ARG_TOPE = "Dtope";
+    private static final String ARG_INPATH = "DinPath";
+    private static final String ARG_OUTPATH = "DoutPath";
+    private static final String ARG_PASSWORD = "Dpass";
+    private static final String ARG_GROUP = "Dgroup";
+    private static final String ARG_COMBINERS = "c";
 
-    public final List<Integer> validQueries;
+    private final List<Integer> validQueries;
 
     private Options options;
     private CommandLine cmd;

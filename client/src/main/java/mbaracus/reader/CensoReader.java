@@ -26,23 +26,14 @@ public class CensoReader {
         CensoTuple data;
         Integer row;
         while ((data = beanReader.read(getClassByQuery(parser.getQuery()), header, processors)) != null) {
-            if (parser.getQuery() == 4) {
-                if (!data.getNombreprov().equals(parser.getProvince())) {
-                    break;
-                }
-            }
             data.setRowId(beanReader.getLineNumber());
             row = beanReader.getLineNumber();
             //TODO Maybe this validation could be using org.supercsv.cellprocessor.constraint.Equals on CellProcessor
-            if (parser.getQuery() == 4 && !data.getNombreprov().equals(parser.getProvince())) {
-                // Skip this tuple so we don't waste time in unnecessary IO
-            } else {
+            if (parser.getQuery() != 4 || data.getNombreprov().equals(parser.getProvince())) {
                 addToMap(iMap, row, data);
             }
         }
-        if (beanReader != null) {
-            beanReader.close();
-        }
+        beanReader.close();
     }
 
     private static void addToMap(IMap<Integer, CensoTuple> iMap, Integer i, CensoTuple tuple) {
