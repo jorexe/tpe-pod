@@ -1,2 +1,4 @@
 - Probar enviar solo los datos que necesito del CensoTuple para aumentar la velocidad
 - Cambiar el nombre de los mapas a 520155-52108-name
+- Agregar combinators en el resto de las queries
+- Corregir el print de la query 5
