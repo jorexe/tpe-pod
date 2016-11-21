@@ -8,6 +8,7 @@ import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 import mbaracus.enumerators.HouseType;
+import mbaracus.query4.mr.ProvinceCounterCombinerFactory;
 import mbaracus.tuples.CensoTuple;
 import mbaracus.query1.model.AgeCount;
 import mbaracus.query1.model.AgeType;
@@ -130,10 +131,19 @@ class QueryExecutor {
     private void executeQuery4() throws IOException, InterruptedException, ExecutionException {
         Job<Integer, CensoTuple> job = getInitialJob();
 
-        JobCompletableFuture<Map<Integer, Department>> future = job
-                .mapper(new ProvinceCounterMapperFactory())
-                .reducer(new ProvinceCounterReducerFactory())
-                .submit();
+        JobCompletableFuture<Map<Integer, Department>> future;
+        if (parser.useCombiners()) {
+            future = job
+                    .mapper(new ProvinceCounterMapperFactory())
+                    .combiner(new ProvinceCounterCombinerFactory())
+                    .reducer(new ProvinceCounterReducerFactory())
+                    .submit();
+        } else {
+            future = job
+                    .mapper(new ProvinceCounterMapperFactory())
+                    .reducer(new ProvinceCounterReducerFactory())
+                    .submit();
+        }
 
         Map<Integer, Department> result = future.get();
 
