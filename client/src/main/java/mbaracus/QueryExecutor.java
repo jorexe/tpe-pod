@@ -105,6 +105,7 @@ class QueryExecutor {
 
         Map<HouseType, HouseTypeMean> meanResult = meanFuture.get();
         QueryPrinters.printResultQuery2(parser.getOutputFile(), meanResult);
+        meanMap.clear();
     }
 
     private void executeQuery3() throws IOException, InterruptedException, ExecutionException {
