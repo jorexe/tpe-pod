@@ -1,7 +1,7 @@
 package mbaracus.query4.mr;
 
 import com.hazelcast.mapreduce.KeyPredicate;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 
 /**
  * Created by jorexe on 17/11/16.

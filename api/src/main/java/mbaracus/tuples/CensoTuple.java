@@ -1,4 +1,4 @@
-package mbaracus.model;
+package mbaracus.tuples;
 
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
@@ -58,7 +58,7 @@ public class CensoTuple implements DataSerializable {
         this.edad = in.readInt();
         this.alfabetismo = in.readInt();
         this.actividad = in.readInt();
-        this.nombredepto= in.readUTF();
+        this.nombredepto = in.readUTF();
         this.nombreprov = in.readUTF();
         this.hogarId = in.readInt();
     }

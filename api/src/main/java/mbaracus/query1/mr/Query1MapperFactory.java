@@ -2,7 +2,7 @@ package mbaracus.query1.mr;
 
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
-import mbaracus.model.CensoTuple;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.query1.model.AgeCount;
 import mbaracus.query1.model.AgeType;
 

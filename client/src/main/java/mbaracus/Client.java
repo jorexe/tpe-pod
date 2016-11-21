@@ -5,8 +5,8 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.reader.CensoReader;
-import mbaracus.model.CensoTuple;
 import mbaracus.utils.ArgumentParser;
 import org.apache.commons.cli.ParseException;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
 public class Client {
-    public static final String MAP_NAME = "censo-baracus";
+    private static final String MAP_NAME = "censo-baracus";
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
@@ -29,10 +29,7 @@ public class Client {
         ArgumentParser parser = new ArgumentParser();
         try {
             parser.parse(args);
-        } catch (ParseException e) {
-            logger.error(e.getMessage());
-            return;
-        } catch (UnknownHostException e) {
+        } catch (ParseException | UnknownHostException e) {
             logger.error(e.getMessage());
             return;
         }
@@ -60,6 +57,9 @@ public class Client {
 
         endTime = System.currentTimeMillis();
         logger.info("Fin del trabajo map/reduce" + timeDuration(startTime, endTime));
+
+        // Remove all elements of map for next run
+        iMap.clear();
 
         System.exit(0);
     }
