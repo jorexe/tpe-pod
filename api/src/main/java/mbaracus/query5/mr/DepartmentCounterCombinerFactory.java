@@ -13,9 +13,9 @@ public class DepartmentCounterCombinerFactory implements CombinerFactory<String,
     public Combiner<DepartmentCount, DepartmentCount> newCombiner(String key) {
         return new Combiner<DepartmentCount, DepartmentCount>() {
 
-            private int count;
-            private String dep;
-            private String prov;
+            private int count = 0;
+            private String dep = null;
+            private String prov = null;
 
             @Override
             public void combine(DepartmentCount value) {

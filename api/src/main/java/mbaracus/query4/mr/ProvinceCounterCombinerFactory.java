@@ -23,7 +23,7 @@ public class ProvinceCounterCombinerFactory implements CombinerFactory<Integer, 
                 if (nombreDpto == null) {
                     this.nombreDpto = value.getNombreDpto();
                 }
-                totalHabitants++;
+                totalHabitants+= value.getHabitants();
             }
 
             @Override

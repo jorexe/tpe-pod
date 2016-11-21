@@ -21,8 +21,12 @@ public class AnalfabetCounterCombinerFactory implements CombinerFactory<Integer,
             public void combine(DepartmentStat value) {
                 totalHabitants += value.getTotalHabitants();
                 analfabets += value.getAnalfabetos();
-                nombreDepto = value.getNombreDepto();
-                nombreProv = value.getNombreProv();
+                if (nombreDepto == null) {
+                    nombreDepto = value.getNombreDepto();
+                }
+                if (nombreProv == null) {
+                    nombreProv = value.getNombreProv();
+                }
             }
 
             @Override

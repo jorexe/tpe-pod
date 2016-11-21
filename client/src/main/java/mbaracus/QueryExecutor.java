@@ -8,9 +8,6 @@ import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 import mbaracus.enumerators.HouseType;
-import mbaracus.query3.mr.AnalfabetCounterCombinerFactory;
-import mbaracus.query4.mr.ProvinceCounterCombinerFactory;
-import mbaracus.tuples.CensoTuple;
 import mbaracus.query1.model.AgeCount;
 import mbaracus.query1.model.AgeType;
 import mbaracus.query1.mr.Query1MapperFactory;
@@ -28,9 +25,9 @@ import mbaracus.query4.model.Department;
 import mbaracus.query4.mr.ProvinceCounterMapperFactory;
 import mbaracus.query4.mr.ProvinceCounterReducerFactory;
 import mbaracus.query5.model.DepartmentCount;
-import mbaracus.query5.mr.DepartmentCounterCombinerFactory;
 import mbaracus.query5.mr.DepartmentCounterMapperFactory;
 import mbaracus.query5.mr.DepartmentCounterReducerFactory;
+import mbaracus.tuples.CensoTuple;
 import mbaracus.utils.ArgumentParser;
 import mbaracus.utils.QueryPrinters;
 
@@ -113,19 +110,10 @@ class QueryExecutor {
     private void executeQuery3() throws IOException, InterruptedException, ExecutionException {
         Job<Integer, CensoTuple> job = getInitialJob();
 
-        ICompletableFuture<Map<Integer, DepartmentStat>> future;
-        if (parser.useCombiners()) {
-            future = job
-                    .mapper(new AnalfabetCounterMapperFactory())
-                    .combiner(new AnalfabetCounterCombinerFactory())
-                    .reducer(new AnalfabetCounterReducerFactory())
-                    .submit();
-        } else {
-            future = job
-                    .mapper(new AnalfabetCounterMapperFactory())
-                    .reducer(new AnalfabetCounterReducerFactory())
-                    .submit();
-        }
+        ICompletableFuture<Map<Integer, DepartmentStat>> future = job
+                .mapper(new AnalfabetCounterMapperFactory())
+                .reducer(new AnalfabetCounterReducerFactory())
+                .submit();
 
         Map<Integer, DepartmentStat> result = future.get();
         List<DepartmentStat> list = result.values().stream().parallel()
@@ -134,26 +122,16 @@ class QueryExecutor {
                     if (departmentStat.getIndex() > t1.getIndex()) return -1;
                     return 0;
                 }).limit(parser.getDepartmentsCount()).collect(Collectors.toList());
-
         QueryPrinters.printResultQuery3(parser.getOutputFile(), list);
     }
 
     private void executeQuery4() throws IOException, InterruptedException, ExecutionException {
         Job<Integer, CensoTuple> job = getInitialJob();
 
-        JobCompletableFuture<Map<Integer, Department>> future;
-        if (parser.useCombiners()) {
-            future = job
-                    .mapper(new ProvinceCounterMapperFactory())
-                    .combiner(new ProvinceCounterCombinerFactory())
-                    .reducer(new ProvinceCounterReducerFactory())
-                    .submit();
-        } else {
-            future = job
-                    .mapper(new ProvinceCounterMapperFactory())
-                    .reducer(new ProvinceCounterReducerFactory())
-                    .submit();
-        }
+        JobCompletableFuture<Map<Integer, Department>> future = job
+                .mapper(new ProvinceCounterMapperFactory())
+                .reducer(new ProvinceCounterReducerFactory())
+                .submit();
 
         Map<Integer, Department> result = future.get();
 
@@ -171,20 +149,10 @@ class QueryExecutor {
         JobTracker tracker = client.getJobTracker(DEFAULT_JOB_TRACKER);
         KeyValueSource<Integer, CensoTuple> source = KeyValueSource.fromMap(iMap);
         Job<Integer, CensoTuple> job = tracker.newJob(source);
-        JobCompletableFuture<Map<String, DepartmentCount>> future;
-
-        if (parser.useCombiners()) {
-            future = job
-                    .mapper(new DepartmentCounterMapperFactory())
-                    .combiner(new DepartmentCounterCombinerFactory())
-                    .reducer(new DepartmentCounterReducerFactory())
-                    .submit();
-        } else {
-            future = job
-                    .mapper(new DepartmentCounterMapperFactory())
-                    .reducer(new DepartmentCounterReducerFactory())
-                    .submit();
-        }
+        JobCompletableFuture<Map<String, DepartmentCount>> future = job
+                .mapper(new DepartmentCounterMapperFactory())
+                .reducer(new DepartmentCounterReducerFactory())
+                .submit();
 
         Map<String, DepartmentCount> result = future.get();
         QueryPrinters.printResultQuery5(parser.getOutputFile(), result);
