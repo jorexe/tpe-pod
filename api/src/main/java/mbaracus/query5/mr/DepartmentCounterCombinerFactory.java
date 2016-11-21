@@ -37,6 +37,7 @@ public class DepartmentCounterCombinerFactory implements CombinerFactory<String,
             public void reset() {
                 this.count = 0;
                 this.dep = null;
+                this.prov = null;
             }
         };
     }
