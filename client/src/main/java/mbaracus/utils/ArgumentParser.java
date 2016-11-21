@@ -20,6 +20,7 @@ public class ArgumentParser {
     private static final String ARG_PASSWORD = "Dpass";
     private static final String ARG_GROUP = "Dgroup";
     private static final String ARG_COMBINERS = "c";
+    private static final String ARG_REUSE = "Dreuse";
 
     private final List<Integer> validQueries;
 
@@ -35,6 +36,7 @@ public class ArgumentParser {
     private String clusterPassword;
     private String clusterName;
     private boolean useCombiners;
+    private boolean reuseMap;
 
     public ArgumentParser() {
         this.validQueries = new ArrayList<>(5);
@@ -131,6 +133,7 @@ public class ArgumentParser {
                 .longOpt(ARG_GROUP)
                 .required(false)
                 .build());
+        options.addOption(ARG_REUSE, false, "reuse map");
         options.addOption(ARG_COMBINERS, false, "enable combinators");
     }
 
@@ -150,6 +153,7 @@ public class ArgumentParser {
         clusterPassword = cmd.getOptionValue(ARG_PASSWORD);
         clusterName = cmd.getOptionValue(ARG_GROUP);
         useCombiners = cmd.hasOption(ARG_COMBINERS);
+        reuseMap = cmd.hasOption(ARG_REUSE);
 
         if (!validQueries.contains(query)) {
             throw new ParseException("invalid query value");
@@ -212,5 +216,9 @@ public class ArgumentParser {
 
     public boolean useCombiners() {
         return useCombiners;
+    }
+
+    public boolean reuseMap() {
+        return reuseMap;
     }
 }

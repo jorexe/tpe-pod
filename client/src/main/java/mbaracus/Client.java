@@ -43,7 +43,9 @@ public class Client {
         logger.info("Inicio de la lectura del archivo");
         startTime = System.currentTimeMillis();
 
-        CensoReader.parseCsv(iMap, parser.getInputFile(), parser);
+        if (!parser.reuseMap()) {
+            CensoReader.parseCsv(iMap, parser.getInputFile(), parser);
+        }
 
         endTime = System.currentTimeMillis();
         logger.info("Fin de la lectura del archivo" + timeDuration(startTime, endTime));
