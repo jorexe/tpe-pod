@@ -73,8 +73,8 @@ public class QueryPrinters {
                         toPrint.add(list.get(j) + " + " + list.get(k));
                     }
                 }
+                toPrint.add("");
             }
-            toPrint.add("");
         });
         writeTo(output, toPrint);
     }

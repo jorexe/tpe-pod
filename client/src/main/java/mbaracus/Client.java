@@ -61,7 +61,7 @@ public class Client {
         logger.info("Fin del trabajo map/reduce" + timeDuration(startTime, endTime));
 
         // Remove all elements of map for next run
-        iMap.clear();
+        //iMap.clear();
 
         System.exit(0);
     }
