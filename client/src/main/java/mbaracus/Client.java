@@ -38,18 +38,18 @@ public class Client {
         logger.info("Fin del parseo de entrada" + timeDuration(startTime, endTime));
 
         HazelcastInstance client = getHzClient(parser);
-        IMap<Integer, CensoTuple> iMap = client.getMap(MAP_NAME);
 
-        logger.info("Inicio de la lectura del archivo");
-        startTime = System.currentTimeMillis();
+
+        IMap<Integer, CensoTuple> iMap = client.getMap(MAP_NAME + parser.getQuery());
 
         if (!parser.reuseMap()) {
-            CensoReader.parseCsv(iMap, parser.getInputFile(), parser);
+            logger.info("Inicio de la lectura del archivo");
+            startTime = System.currentTimeMillis();
+            CensoReader.parseCsv(iMap, parser.getInputFile(), parser, parser.getQuery());
+            endTime = System.currentTimeMillis();
+            logger.info("Fin de la lectura del archivo" + timeDuration(startTime, endTime));
+            logger.info(String.format("Se leyeron %d tuplas", iMap.keySet().size()));
         }
-
-        endTime = System.currentTimeMillis();
-        logger.info("Fin de la lectura del archivo" + timeDuration(startTime, endTime));
-        logger.info(String.format("Se leyeron %d tuplas", iMap.keySet().size()));
 
         logger.info("Inicio del trabajo map/reduce");
         startTime = System.currentTimeMillis();

@@ -8,9 +8,9 @@ import mbaracus.query5.model.DepartmentCount;
 /**
  * Created by jorexe on 17/11/16.
  */
-public class DepartmentCounterCombinerFactory implements CombinerFactory<String, DepartmentCount, DepartmentCount> {
+public class DepartmentCounterCombinerFactory implements CombinerFactory<Integer, DepartmentCount, DepartmentCount> {
     @Override
-    public Combiner<DepartmentCount, DepartmentCount> newCombiner(String key) {
+    public Combiner<DepartmentCount, DepartmentCount> newCombiner(Integer key) {
         return new Combiner<DepartmentCount, DepartmentCount>() {
 
             private int count = 0;

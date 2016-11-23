@@ -14,21 +14,22 @@ import java.io.*;
 import java.nio.file.Path;
 
 public class CensoReader {
-    public static void parseCsv(final IMap<Integer, CensoTuple> iMap, Path path, ArgumentParser parser) throws IOException {
+
+    public static void parseCsv(final IMap<Integer, CensoTuple> iMap, Path path, ArgumentParser parser, Integer query) throws IOException {
         final InputStream is = new FileInputStream(path.toString());
         final Reader aReader = new InputStreamReader(is);
         ICsvBeanReader beanReader = new CsvBeanReader(aReader, CsvPreference.STANDARD_PREFERENCE);
 
-        final String[] header = getHeadersByQuery(beanReader, parser.getQuery());
-        final CellProcessor[] processors = getProcessorsByQuery(parser.getQuery());
+        final String[] header = getHeadersByQuery(beanReader, query);
+        final CellProcessor[] processors = getProcessorsByQuery(query);
 
         CensoTuple data;
         Integer row;
-        while ((data = beanReader.read(getClassByQuery(parser.getQuery()), header, processors)) != null) {
+        while ((data = beanReader.read(getClassByQuery(query), header, processors)) != null) {
             data.setRowId(beanReader.getLineNumber());
             row = beanReader.getLineNumber();
             //TODO Maybe this validation could be using org.supercsv.cellprocessor.constraint.Equals on CellProcessor
-            if (parser.getQuery() != 4 || data.getNombreprov().equals(parser.getProvince())) {
+            if (query != 4 || data.getNombreprov().equals(parser.getProvince())) {
                 addToMap(iMap, row, data);
             }
         }

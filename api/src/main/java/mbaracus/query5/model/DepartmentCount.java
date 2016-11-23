@@ -43,4 +43,25 @@ public class DepartmentCount implements DataSerializable {
                 ", count=" + count +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DepartmentCount that = (DepartmentCount) o;
+
+        if (!departmentName.equals(that.departmentName)) return false;
+        if (!departmentProvince.equals(that.departmentProvince)) return false;
+        return count.equals(that.count);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = departmentName.hashCode();
+        result = 31 * result + departmentProvince.hashCode();
+        result = 31 * result + count.hashCode();
+        return result;
+    }
 }

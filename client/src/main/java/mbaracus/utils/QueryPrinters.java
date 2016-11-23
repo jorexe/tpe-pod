@@ -53,7 +53,7 @@ public class QueryPrinters {
         writeTo(output, toPrint);
     }
 
-    public static void printResultQuery5(Path output, Map<String, DepartmentCount> result) throws IOException {
+    public static void printResultQuery5(Path output, Map<Integer, DepartmentCount> result) throws IOException {
 
         Map<Integer, List<String>> departments = new ConcurrentHashMap<>();
         result.keySet().stream().parallel().forEach(x -> {

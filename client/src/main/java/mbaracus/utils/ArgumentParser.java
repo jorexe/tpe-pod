@@ -20,6 +20,7 @@ public class ArgumentParser {
     private static final String ARG_PASSWORD = "Dpass";
     private static final String ARG_GROUP = "Dgroup";
     private static final String ARG_REUSE = "Dreuse";
+    private static final String ARG_COMBINER = "Dcombiners";
 
     private final List<Integer> validQueries;
 
@@ -29,12 +30,15 @@ public class ArgumentParser {
     private Path inputFile;
     private Path outputFile;
     private InetAddress clusterIP;
+
     private Integer departmentsCount;
     private Integer habitantsLimit;
     private String province;
     private String clusterPassword;
     private String clusterName;
+
     private boolean reuseMap;
+    private boolean useCombiners;
 
     public ArgumentParser() {
         this.validQueries = new ArrayList<>(5);
@@ -150,6 +154,7 @@ public class ArgumentParser {
         clusterPassword = cmd.getOptionValue(ARG_PASSWORD);
         clusterName = cmd.getOptionValue(ARG_GROUP);
         reuseMap = cmd.hasOption(ARG_REUSE);
+        useCombiners = cmd.hasOption(ARG_COMBINER);
 
         if (!validQueries.contains(query)) {
             throw new ParseException("invalid query value");
@@ -212,5 +217,9 @@ public class ArgumentParser {
 
     public boolean reuseMap() {
         return reuseMap;
+    }
+
+    public boolean useCombiners() {
+        return useCombiners;
     }
 }

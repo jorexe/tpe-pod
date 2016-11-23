@@ -4,10 +4,10 @@ import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 import mbaracus.query5.model.DepartmentCount;
 
-public class DepartmentCounterReducerFactory implements ReducerFactory<String, DepartmentCount, DepartmentCount> {
+public class DepartmentCounterReducerFactory implements ReducerFactory<Integer, DepartmentCount, DepartmentCount> {
 
     @Override
-    public Reducer<DepartmentCount, DepartmentCount> newReducer(String key) {
+    public Reducer<DepartmentCount, DepartmentCount> newReducer(Integer key) {
         return new Reducer<DepartmentCount, DepartmentCount>() {
             private int count;
             private String dep;
