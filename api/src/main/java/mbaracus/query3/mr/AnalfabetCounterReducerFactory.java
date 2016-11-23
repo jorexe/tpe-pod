@@ -23,8 +23,12 @@ public class AnalfabetCounterReducerFactory implements ReducerFactory<Integer, D
             public void reduce(DepartmentStat value) {
                 totalHabitants += value.getTotalHabitants();
                 analfabets += value.getAnalfabetos();
-                nombreDepto = value.getNombreDepto();
-                nombreProv = value.getNombreProv();
+                if (nombreDepto == null) {
+                    this.nombreDepto = value.getNombreDepto();
+                }
+                if (nombreProv == null) {
+                    this.nombreProv = value.getNombreProv();
+                }
             }
 
             @Override

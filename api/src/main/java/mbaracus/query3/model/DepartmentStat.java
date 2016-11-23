@@ -99,4 +99,13 @@ public class DepartmentStat implements DataSerializable {
         return (float) analfabetos / totalHabitants;
     }
 
+    @Override
+    public String toString() {
+        return "DepartmentStat{" +
+                "analfabetos=" + analfabetos +
+                ", totalHabitants=" + totalHabitants +
+                ", nombreDepto='" + nombreDepto + '\'' +
+                ", nombreProv='" + nombreProv + '\'' +
+                '}';
+    }
 }

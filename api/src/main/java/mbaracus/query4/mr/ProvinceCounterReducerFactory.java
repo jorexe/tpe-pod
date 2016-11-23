@@ -25,7 +25,7 @@ public class ProvinceCounterReducerFactory implements ReducerFactory<Integer, De
                 if (nombreDpto == null) {
                     this.nombreDpto = value.getNombreDpto();
                 }
-                totalHabitants++;
+                totalHabitants+= value.getHabitants();
             }
 
             @Override
